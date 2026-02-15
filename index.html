@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>I NEED A JEEP</title>
   <style>
     /* ==========================================================================
@@ -26,8 +26,9 @@
       --espacio-imagenes: 100px;
       --alto-contenedor: 55vh;
       --margen-izquierdo: 80px;
-      --margen-derecho: 130px;
+      --margen-derecho: 80px;
       --posicion-texto-vertical: 440px;
+      --posicion-texto-desktop: calc(50vh + (var(--alto-contenedor) / 2) + 20px);
       
       /* Responsive */
       --tablet-breakpoint: 768px;
@@ -41,7 +42,6 @@
       --cursor-opacity: 0.8;
     }
     
-    /* Modo oscuro */
     :root.modo-oscuro {
       --color-fondo: #1a1a1a;
       --color-texto: #e0e0e0;
@@ -53,8 +53,8 @@
        ========================================================================== */
     
     @font-face {
-      font-family: 'REX';
-      src: url('./fonts/FOT-NewRodinProM.otf') format('opentype');
+      font-family: 'ABC CameraPlain';
+      src: url('./fonts/FOT-ABCCameraPlain-Regular-Trial') format('opentype');
       font-weight: normal;
       font-style: normal;
     }
@@ -128,7 +128,7 @@
     }
     
     /* ==========================================================================
-       LAYOUT PRINCIPAL
+       LAYOUT PRINCIPAL - ESCRITORIO
        ========================================================================== */
     
     .landing {
@@ -140,7 +140,7 @@
     }
     
     /* ==========================================================================
-       GALERÍAS DE IMÁGENES
+       GALERÍAS DE IMÁGENES - ESCRITORIO
        ========================================================================== */
     
     .image-pair {
@@ -162,30 +162,22 @@
       height: 100vh;
     }
     
-    /* Contenedores específicos por galería */
     .image-block.left-block .image-container {
-      max-width: 500px;
+      max-width: 600px;
     }
     
     .image-block.right-block .image-container {
-      max-width: 380px;
+      max-width: 400px;
     }
     
-    /* Estilos base para contenedores de imágenes */
     .image-container {
       position: relative;
       overflow: hidden;
       background-color: var(--color-imagen-fondo);
       margin: 0;
-      transition: transform 0.3s ease;
       cursor: pointer !important;
     }
     
-    .image-container:hover {
-      transform: scale(1.01);
-    }
-    
-    /* Galería izquierda - Formato 16:9 (horizontal) */
     .image-block.left-block .image-container {
       width: 100%;
       max-width: 600px;
@@ -193,7 +185,6 @@
       aspect-ratio: 16/9;
     }
     
-    /* Galería derecha - Formato 4:5 (vertical) */
     .image-block.right-block .image-container {
       width: 100%;
       max-width: 400px;
@@ -201,7 +192,6 @@
       aspect-ratio: 4/5;
     }
     
-    /* Imágenes dentro de los contenedores */
     .image-container img {
       position: absolute;
       top: 0;
@@ -209,6 +199,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center center;
       opacity: 0;
       transition: opacity 0.3s ease;
     }
@@ -218,7 +209,7 @@
     }
     
     /* ==========================================================================
-       TEXTO Y NAVEGACIÓN
+       TEXTOS - ESCRITORIO
        ========================================================================== */
     
     .text-left,
@@ -237,15 +228,29 @@
     
     .text-left {
       left: var(--margen-izquierdo);
+      text-align: left;
     }
     
     .text-right {
-      right: var(--margen-derecho);
-      text-align: left;
+      right: var(--margen-derecho); 
+      text-align: right;
       display: block;
     }
     
-    /* Enlaces */
+    @media (min-width: 769px) {
+      .text-left {
+        left: 30px;
+        top: var(--posicion-texto-desktop);
+        text-align: left;
+      }
+      
+      .text-right {
+        right: 30px;
+        top: var(--posicion-texto-desktop);
+        text-align: right;
+      }
+    }
+    
     .text-right a {
       display: inline-block;
       color: inherit;
@@ -254,7 +259,7 @@
       font-weight: inherit;
       font-size: inherit;
       line-height: inherit;
-      text-align: left;
+      text-align: right;
       width: 100%;
       transition: color 0.2s ease, opacity 0.2s ease;
     }
@@ -265,128 +270,389 @@
     }
     
     /* ==========================================================================
-       TOGGLE MODO OSCURO/CLARO
+       BOTONES SUPERIORES
        ========================================================================== */
     
-    .toggle-modo-icono {
+    .jeep-back {
+      position: fixed;
+      top: 30px;
+      left: 30px;
+      color: var(--color-texto);
+      text-decoration: none;
+      font-family: var(--fuente-principal);
+      font-size: var(--tamano-texto);
+      line-height: var(--linea-altura);
+      font-weight: var(--peso-texto);
+      z-index: 1000;
+      padding: 0;
+      margin: 0;
+      background: none;
+      border: none;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      opacity: 0.9;
+      cursor: pointer !important;
+    }
+    
+    .jeep-back:hover {
+      opacity: 0.7;
+      transform: translateX(-2px);
+    }
+    
+    #theme-switcher-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      font: inherit;
+      color: var(--color-texto);
+      font-size: var(--tamano-texto);
+      width: auto;
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      opacity: 0.7;
+      cursor: button !important;
       position: fixed;
       top: 40px;
-      right: 80px;
-      width: 10.25px;
-      height: 12.30px;
+      right: 30px; 
       z-index: 1000;
-      opacity: 0.7;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      background: transparent;
-      border: none;
     }
     
-    .toggle-modo-icono:hover {
+    #theme-switcher-btn:hover {
       opacity: 1;
-      transform: scale(1.1);
     }
     
-    /* Icono de SOL (modo claro activo) */
-    .toggle-modo-icono::before {
-      content: "W/";
-      font-size: 10.25px;
-      color: var(--color-texto);
+    #theme-switcher-btn .icon-light,
+    #theme-switcher-btn .icon-dark {
+      display: none;
+      font-family: var(--fuente-principal);
+      font-weight: var(--peso-texto);
+      font-size: var(--tamano-texto);
+      line-height: var(--linea-altura);
+    }
+    
+    :root:not(.modo-oscuro) #theme-switcher-btn .icon-light {
       display: block;
-      line-height: 1;
-      transition: all 0.3s ease;
     }
     
-    /* Cuando está en modo oscuro, cambia a LUNA */
-    :root.modo-oscuro .toggle-modo-icono::before {
-      content: "/B";
+    :root.modo-oscuro #theme-switcher-btn .icon-dark {
+      display: block;
     }
     
     /* ==========================================================================
-       RESPONSIVE DESIGN
+       RESPONSIVE DESIGN - MÓVIL SIN SCROLL
        ========================================================================== */
     
-    @media (max-width: 768px) {
+    /* TABLET (769px - 1024px) */
+    @media (max-width: 1024px) {
       :root {
-        --espacio-imagenes: 40px;
-        --margen-izquierdo: 20px;
-        --margen-derecho: 20px;
-        --posicion-texto-vertical: auto;
-        --ancho-responsive: 90%;
-        --cursor-size: 10px;
-        --cursor-size-hover: 12px;
+        --espacio-imagenes: 60px;
+        --margen-izquierdo: 50px;
+        --margen-derecho: 50px;
       }
       
-      .landing {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-      }
-      
-      .image-pair {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        height: auto;
-        padding: var(--espacio-responsive) 0;
-      }
-      
-      .image-block {
-        height: auto;
-      }
-      
-      .image-block.left-block,
-      .image-block.right-block {
-        align-items: center;
-        padding: 0 20px;
-      }
-      
-      /* Formato intermedio para móvil */
-      .image-block.left-block .image-container,
-      .image-block.right-block .image-container {
-        width: var(--ancho-responsive);
+      .image-block.left-block .image-container {
         max-width: 500px;
-        aspect-ratio: 4/3;
       }
       
-      .text-left, .text-right {
-        position: static;
-        text-align: center;
-        margin: 30px auto;
-        padding: 0 20px;
-        font-size: 11px;
-        letter-spacing: 0.3px;
+      .image-block.right-block .image-container {
+        max-width: 500px;
       }
       
-      .text-right {
-        text-align: center;
+      #theme-switcher-btn {
+        right: 50px;
+        top: 40px;
       }
       
-      .text-right a {
-        text-align: center;
+      .jeep-back {
+        left: 50px;
+        top: 40px;
       }
       
-      .toggle-modo-icono {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        font-size: 12px;
+      @media (min-width: 769px) {
+        .text-left {
+          left: 50px;
+          top: var(--posicion-texto-desktop);
+        }
+        
+        .text-right {
+          right: 50px;
+          top: var(--posicion-texto-desktop);
+        }
       }
     }
     
+    /* MÓVIL Y TABLET VERTICAL (768px o menos) - NUEVO DISEÑO */
+    @media (max-width: 768px) {
+      :root {
+        --espacio-imagenes: 15px;
+        --margen-izquierdo: 20px;
+        --margen-derecho: 20px;
+        --ancho-responsive: 85%;
+        --cursor-size: 10px;
+        --cursor-size-hover: 12px;
+        --alto-contenedor: 30vh;
+      }
+      
+      /* ELIMINAR SCROLL COMPLETAMENTE */
+      html, body {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+      
+      /* CONTENEDOR PRINCIPAL - FLOW VERTICAL */
+      .landing {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+      
+      /* CONTENEDOR DE CONTENIDO - GALERÍAS PRIMERO, TEXTOS DESPUÉS */
+      .content-wrapper {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100vw;
+        padding: 60px 0 0 0; /* Espacio para botones superiores */
+      }
+      
+      /* SECCIÓN DE GALERÍAS CONSECUTIVAS */
+      .gallery-section {
+        display: flex;
+        flex-direction: column;
+        height: 70vh; /* 70% de la pantalla para galerías */
+        width: 100%;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      
+      /* BLOQUES DE IMÁGENES CONSECUTIVAS */
+      .image-block.mobile-block {
+        width: var(--ancho-responsive);
+        max-width: 500px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      /* PRIMERA GALERÍA (IZQUIERDA) - EN MÓVIL */
+      .image-block.left-block.mobile-block {
+        height: 33vh; /* 33% de la altura de galerías */
+        margin-bottom: 5px;
+      }
+      
+      .image-block.left-block.mobile-block .image-container {
+        width: 100%;
+        height: 100%;
+        max-height: 30vh;
+        aspect-ratio: 16/9;
+      }
+      
+      /* SEGUNDA GALERÍA (DERECHA) - EN MÓVIL */
+      .image-block.right-block.mobile-block {
+        height: 33vh; /* 33% de la altura de galerías */
+        margin-top: 5px;
+      }
+      
+      .image-block.right-block.mobile-block .image-container {
+        width: 100%;
+        height: 100%;
+        max-height: 30vh;
+        aspect-ratio: 4/5;
+      }
+      
+      /* SECCIÓN DE TEXTOS - DEBAJO DE GALERÍAS */
+      .text-section {
+        display: flex;
+        flex-direction: column;
+        height: 30vh; /* 30% de la pantalla para textos */
+        width: 100%;
+        padding: 15px 20px 10px 20px;
+        gap: 15px;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-shrink: 0;
+        box-sizing: border-box;
+      }
+      
+      /* TEXTOS EN MÓVIL - UNO DEBAJO DEL OTRO */
+      .text-left.mobile-text,
+      .text-right.mobile-text {
+        position: static;
+        text-align: left;
+        margin: 0;
+        padding: 0;
+        font-size: 11px;
+        line-height: 1.3;
+        width: 100%;
+        height: auto;
+      }
+      
+      .text-left.mobile-text {
+        order: 1;
+      }
+      
+      .text-right.mobile-text {
+        order: 2;
+        text-align: left;
+      }
+      
+      .text-right.mobile-text a {
+        text-align: left;
+      }
+      
+      /* BOTONES SUPERIORES EN MÓVIL */
+      .jeep-back {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        font-size: 11px;
+        z-index: 1001;
+      }
+      
+      #theme-switcher-btn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        font-size: 11px;
+        z-index: 1001;
+      }
+      
+      /* OCULTAR ELEMENTOS DE ESCRITORIO EN MÓVIL */
+      .image-pair,
+      .text-left:not(.mobile-text),
+      .text-right:not(.mobile-text) {
+        display: none !important;
+      }
+      
+      /* MOSTRAR ELEMENTOS DE MÓVIL */
+      .content-wrapper,
+      .gallery-section,
+      .text-section,
+      .image-block.mobile-block,
+      .text-left.mobile-text,
+      .text-right.mobile-text {
+        display: flex;
+      }
+    }
+    
+    /* MÓVIL PEQUEÑO (480px o menos) */
     @media (max-width: 480px) {
       :root {
-        --ancho-responsive: 95%;
-        --alto-contenedor: 40vh;
+        --ancho-responsive: 90%;
         --cursor-size: 8px;
         --cursor-size-hover: 10px;
+        --alto-contenedor: 28vh;
       }
       
-      .image-block.left-block .image-container,
-      .image-block.right-block .image-container {
-        width: var(--ancho-responsive);
-        aspect-ratio: 1/1;
+      .content-wrapper {
+        padding: 55px 0 0 0;
       }
       
-      .text-left, .text-right {
+      .gallery-section {
+        height: 65vh;
+        gap: 8px;
+      }
+      
+      .image-block.left-block.mobile-block,
+      .image-block.right-block.mobile-block {
+        height: 30vh;
+      }
+      
+      .image-block.left-block.mobile-block .image-container,
+      .image-block.right-block.mobile-block .image-container {
+        max-height: 28vh;
+      }
+      
+      .text-section {
+        height: 35vh;
+        padding: 10px 15px 5px 15px;
+        gap: 10px;
+      }
+      
+      .text-left.mobile-text,
+      .text-right.mobile-text {
         font-size: 10px;
+      }
+      
+      .jeep-back {
+        top: 15px;
+        left: 15px;
+        font-size: 10px;
+      }
+      
+      #theme-switcher-btn {
+        top: 15px;
+        right: 15px;
+        font-size: 10px;
+      }
+    }
+    
+    /* MÓVIL MUY PEQUEÑO (320px) */
+    @media (max-width: 320px) {
+      :root {
+        --ancho-responsive: 92%;
+        --alto-contenedor: 25vh;
+      }
+      
+      .content-wrapper {
+        padding: 50px 0 0 0;
+      }
+      
+      .gallery-section {
+        height: 62vh;
+        gap: 6px;
+      }
+      
+      .image-block.left-block.mobile-block,
+      .image-block.right-block.mobile-block {
+        height: 28vh;
+      }
+      
+      .image-block.left-block.mobile-block .image-container,
+      .image-block.right-block.mobile-block .image-container {
+        max-height: 26vh;
+      }
+      
+      .text-section {
+        height: 38vh;
+        padding: 8px 12px 5px 12px;
+        gap: 8px;
+      }
+      
+      .text-left.mobile-text,
+      .text-right.mobile-text {
+        font-size: 9px;
+        line-height: 1.2;
+      }
+      
+      .jeep-back {
+        top: 12px;
+        left: 12px;
+        font-size: 9px;
+      }
+      
+      #theme-switcher-btn {
+        top: 12px;
+        right: 12px;
+        font-size: 9px;
       }
     }
     
@@ -397,6 +663,18 @@
     ::-webkit-scrollbar {
       display: none;
     }
+    
+    html, body {
+      max-width: 100vw;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    @supports (-webkit-touch-callout: none) {
+      body {
+        touch-action: pan-x pan-y;
+      }
+    }
   </style>
 </head>
 
@@ -405,58 +683,122 @@
   <!-- Cursor personalizado -->
   <div id="custom-cursor"></div>
 
+  <!-- Botón "I NEED A JEEP" -->
+  <a href="index.html" class="jeep-back">I NEED A JEEP</a>
+
   <!-- Botón de cambio de tema -->
-  <button class="toggle-modo-icono" id="toggleModo" aria-label="Cambiar modo claro/oscuro"></button>
+  <button id="theme-switcher-btn">
+    <span class="icon-light">/B</span>
+    <span class="icon-dark">/W</span>
+  </button>
 
   <div class="landing">
+    
+    <!-- ESCRITORIO: layout original -->
     <div class="image-pair">
-      
-      <!-- GALERÍA IZQUIERDA -->
       <div class="image-block left-block">
         <div class="image-container" id="galeria-izquierda">
-          <img src="images/img1.jpg" class="active" alt="Imagen 1">
-          <img src="images/img2.jpg" alt="Imagen 2">
-          <img src="images/img9.jpg" alt="Imagen 9">
+          <img src="images/img01.webp" class="active" alt="Image 1">
+          <img src="images/img02.webp" alt="Image 2">
+          <img src="images/img03.webp" alt="Image 3">
+          <img src="images/img04.webp" alt="Image 4">
+          <img src="images/img05.webp" alt="Image 5">
+          <img src="images/img06.webp" alt="Image 6">
+          <img src="images/img10.webp" alt="Image 10">
+          <img src="images/img11.webp" alt="Image 11">
+          <img src="images/img12.webp" alt="Image 12">
         </div>
       </div>
       
-      <!-- GALERÍA DERECHA -->
       <div class="image-block right-block">
         <div class="image-container" id="galeria-derecha">
-          <img src="images/img4.jpg" class="active" alt="Imagen 4">
-          <img src="images/img3.jpg" alt="Imagen 3">
-          <img src="images/img8.jpg" alt="Imagen 8">
-          <img src="images/img10.jpg" alt="Imagen 10">
+          <img src="images/img07.webp" class="active" alt="Image 7">
+          <img src="images/img08.webp" alt="Image 8">
+          <img src="images/img09.webp" alt="Imagen 9">
+          <img src="images/img15.webp" alt="Imagen 15">
+          <img src="images/img13.webp" alt="Image 13">
+          <img src="images/img14.webp" alt="Image 14">
         </div>
       </div>
-      
     </div>
 
+    <!-- Textos escritorio -->
     <div class="text-left">
-      I NEED A JEEP<br>
-      Ricardo de Marcos <br>
-      Enero 2025, Chaiz Studio
+      <br>
+      Enero 2025, Chaiz Studio <br>
+      Curado por Arturo F. Peral
     </div>
 
     <div class="text-right">
       <a href="texto.html">texto.doc</a><br>
-      <a href="https://www.youtube.com/watch?v=it66ViKgLj8" target="_blank" rel="noopener noreferrer">.mov-exposición</a>
+  
     </div>
+
+    <!-- MÓVIL: nuevo layout vertical -->
+    <div class="content-wrapper">
+      
+      <!-- SECCIÓN 1: Galerías consecutivas -->
+      <div class="gallery-section">
+        
+        <!-- Galería izquierda (primera en móvil) -->
+        <div class="image-block left-block mobile-block">
+          <div class="image-container" id="galeria-izquierda-mobile">
+            <img src="images/img01.webp" class="active" alt="Image 1">
+            <img src="images/img02.webp" alt="Image 2">
+            <img src="images/img03.webp" alt="Image 3">
+            <img src="images/img04.webp" alt="Image 4">
+            <img src="images/img05.webp" alt="Image 5">
+            <img src="images/img06.webp" alt="Image 6">
+            <img src="images/img10.webp" alt="Image 10">
+            <img src="images/img11.webp" alt="Image 11">
+            <img src="images/img12.webp" alt="Image 12">
+          </div>
+        </div>
+        
+        <!-- Galería derecha (segunda en móvil) -->
+        <div class="image-block right-block mobile-block">
+          <div class="image-container" id="galeria-derecha-mobile">
+            <img src="images/img07.webp" class="active" alt="Image 7">
+            <img src="images/img08.webp" alt="Image 8">
+            <img src="images/img09.webp" alt="Imagen 9">
+            <img src="images/img15.webp" alt="Imagen 15">
+            <img src="images/img13.webp" alt="Image 13">
+            <img src="images/img14.webp" alt="Image 14">
+          </div>
+        </div>
+        
+      </div>
+      
+      <!-- SECCIÓN 2: Textos consecutivos -->
+      <div class="text-section">
+        
+        <!-- Texto izquierdo (primero en móvil) -->
+        <div class="text-left mobile-text">
+          <br>
+          Enero 2025, Chaiz Studio <br>
+          Curado por Arturo F. Peral
+        </div>
+        
+        <!-- Texto derecho (segundo en móvil) -->
+        <div class="text-right mobile-text">
+          <a href="texto.html">texto.doc</a><br>
+          
+        </div>
+        
+      </div>
+      
+    </div>
+    
   </div>
 
   <script>
-    // ==========================================================================
-    // SISTEMA DE CURSOR
-    // ==========================================================================
-    
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('🏠 index.html cargado');
+      console.log('🏠 index.html cargado - GALERÍAS CONSECUTIVAS EN MÓVIL');
       
       // 1. CURSOR
       const cursor = document.getElementById('custom-cursor');
       
       if (cursor) {
-        // Asegurar estilos iniciales
         Object.assign(cursor.style, {
           position: 'fixed',
           width: 'var(--cursor-size)',
@@ -473,15 +815,13 @@
           top: '-100px'
         });
         
-        // Seguir mouse
         document.addEventListener('mousemove', function(e) {
           cursor.style.left = e.clientX + 'px';
           cursor.style.top = e.clientY + 'px';
           cursor.style.opacity = 'var(--cursor-opacity)';
         });
         
-        // Hover en elementos interactivos
-        const hoverElements = document.querySelectorAll('a, button, .toggle-modo-icono, .image-container');
+        const hoverElements = document.querySelectorAll('a, button, .jeep-back, #theme-switcher-btn');
         hoverElements.forEach(function(el) {
           el.addEventListener('mouseenter', function() {
             cursor.style.width = 'var(--cursor-size-hover)';
@@ -496,7 +836,6 @@
           });
         });
         
-        // Efecto click
         document.addEventListener('mousedown', function() {
           cursor.style.transform = 'translate(-50%, -50%) scale(0.7)';
         });
@@ -505,7 +844,6 @@
           cursor.style.transform = 'translate(-50%, -50%) scale(1)';
         });
         
-        // Ocultar/mostrar
         document.addEventListener('mouseleave', function() {
           cursor.style.opacity = '0';
         });
@@ -513,26 +851,21 @@
         document.addEventListener('mouseenter', function() {
           cursor.style.opacity = 'var(--cursor-opacity)';
         });
-        
-        console.log('✅ Cursor inicializado');
       }
       
-      // 2. TEMA CLARO/OSCURO
-      const themeBtn = document.getElementById('toggleModo');
+      // 2. TEMA
+      const themeBtn = document.getElementById('theme-switcher-btn');
       
       if (themeBtn) {
-        // Cargar tema guardado
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark') {
           document.documentElement.classList.add('modo-oscuro');
         }
         
-        // Cambiar tema
         themeBtn.addEventListener('click', function() {
           const isDarkMode = document.documentElement.classList.toggle('modo-oscuro');
           localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
           
-          // Actualizar cursor si existe
           if (cursor) {
             if (isDarkMode) {
               cursor.style.backgroundColor = '#e0e0e0';
@@ -543,57 +876,122 @@
             }
           }
         });
-        
-        console.log('✅ Sistema de tema inicializado');
       }
       
-      // 3. GALERÍAS DE IMÁGENES - SISTEMA MEJORADO
-      
-      // Galería izquierda
+      // 3. GALERÍAS (ESCRITORIO)
       const galeriaIzquierda = document.getElementById('galeria-izquierda');
-      const imagenesIzquierda = galeriaIzquierda.querySelectorAll('img');
+      const imagenesIzquierda = galeriaIzquierda ? galeriaIzquierda.querySelectorAll('img') : [];
       let indiceIzquierda = 0;
       
-      galeriaIzquierda.addEventListener('click', function() {
-        console.log('🖱️ Click en galería IZQUIERDA');
-        
-        // Ocultar imagen actual
-        imagenesIzquierda[indiceIzquierda].classList.remove('active');
-        
-        // Calcular siguiente índice
-        indiceIzquierda = (indiceIzquierda + 1) % imagenesIzquierda.length;
-        
-        // Mostrar siguiente imagen
-        imagenesIzquierda[indiceIzquierda].classList.add('active');
-        
-        console.log(`📸 Galería izquierda: Imagen ${indiceIzquierda + 1}/${imagenesIzquierda.length}`);
-      });
+      if (galeriaIzquierda) {
+        galeriaIzquierda.addEventListener('click', function() {
+          imagenesIzquierda[indiceIzquierda].classList.remove('active');
+          indiceIzquierda = (indiceIzquierda + 1) % imagenesIzquierda.length;
+          imagenesIzquierda[indiceIzquierda].classList.add('active');
+        });
+      }
       
-      // Galería derecha
       const galeriaDerecha = document.getElementById('galeria-derecha');
-      const imagenesDerecha = galeriaDerecha.querySelectorAll('img');
+      const imagenesDerecha = galeriaDerecha ? galeriaDerecha.querySelectorAll('img') : [];
       let indiceDerecha = 0;
       
-      galeriaDerecha.addEventListener('click', function() {
-        console.log('🖱️ Click en galería DERECHA');
-        
-        // Ocultar imagen actual
-        imagenesDerecha[indiceDerecha].classList.remove('active');
-        
-        // Calcular siguiente índice
-        indiceDerecha = (indiceDerecha + 1) % imagenesDerecha.length;
-        
-        // Mostrar siguiente imagen
-        imagenesDerecha[indiceDerecha].classList.add('active');
-        
-        console.log(`📸 Galería derecha: Imagen ${indiceDerecha + 1}/${imagenesDerecha.length}`);
+      if (galeriaDerecha) {
+        galeriaDerecha.addEventListener('click', function() {
+          imagenesDerecha[indiceDerecha].classList.remove('active');
+          indiceDerecha = (indiceDerecha + 1) % imagenesDerecha.length;
+          imagenesDerecha[indiceDerecha].classList.add('active');
+        });
+      }
+      
+      // 4. GALERÍAS (MÓVIL)
+      const galeriaIzquierdaMobile = document.getElementById('galeria-izquierda-mobile');
+      const imagenesIzquierdaMobile = galeriaIzquierdaMobile ? galeriaIzquierdaMobile.querySelectorAll('img') : [];
+      let indiceIzquierdaMobile = 0;
+      
+      if (galeriaIzquierdaMobile) {
+        galeriaIzquierdaMobile.addEventListener('click', function() {
+          imagenesIzquierdaMobile[indiceIzquierdaMobile].classList.remove('active');
+          indiceIzquierdaMobile = (indiceIzquierdaMobile + 1) % imagenesIzquierdaMobile.length;
+          imagenesIzquierdaMobile[indiceIzquierdaMobile].classList.add('active');
+        });
+      }
+      
+      const galeriaDerechaMobile = document.getElementById('galeria-derecha-mobile');
+      const imagenesDerechaMobile = galeriaDerechaMobile ? galeriaDerechaMobile.querySelectorAll('img') : [];
+      let indiceDerechaMobile = 0;
+      
+      if (galeriaDerechaMobile) {
+        galeriaDerechaMobile.addEventListener('click', function() {
+          imagenesDerechaMobile[indiceDerechaMobile].classList.remove('active');
+          indiceDerechaMobile = (indiceDerechaMobile + 1) % imagenesDerechaMobile.length;
+          imagenesDerechaMobile[indiceDerechaMobile].classList.add('active');
+        });
+      }
+      
+      // 5. DESACTIVAR HOVER EN IMÁGENES
+      const imageContainers = document.querySelectorAll('.image-container');
+      imageContainers.forEach(function(container) {
+        container.addEventListener('mouseenter', function() {
+          if (cursor) {
+            cursor.style.width = 'var(--cursor-size)';
+            cursor.style.height = 'var(--cursor-size)';
+            cursor.style.backgroundColor = 'var(--color-texto)';
+          }
+        });
       });
       
-      console.log(`📸 Galerías configuradas:`);
-      console.log(`   - Izquierda: ${imagenesIzquierda.length} imágenes`);
-      console.log(`   - Derecha: ${imagenesDerecha.length} imágenes`);
+      // 6. PREVENIR SCROLL EN MÓVIL
+      function prevenirScroll(event) {
+        if (window.innerWidth <= 768) {
+          event.preventDefault();
+          event.stopPropagation();
+          return false;
+        }
+      }
       
-      console.log('🚀 index.html completamente cargado');
+      document.addEventListener('touchmove', prevenirScroll, { passive: false });
+      document.addEventListener('wheel', prevenirScroll, { passive: false });
+      
+      // Forzar tamaño en móvil al cargar
+      if (window.innerWidth <= 768) {
+        document.documentElement.style.height = '100vh';
+        document.body.style.height = '100vh';
+        document.body.style.overflow = 'hidden';
+        
+        // Sincronizar galerías móviles con escritorio si es necesario
+        if (imagenesIzquierda.length > 0 && imagenesIzquierdaMobile.length > 0) {
+          const activeIndex = Array.from(imagenesIzquierda).findIndex(img => img.classList.contains('active'));
+          if (activeIndex >= 0 && activeIndex < imagenesIzquierdaMobile.length) {
+            imagenesIzquierdaMobile.forEach(img => img.classList.remove('active'));
+            imagenesIzquierdaMobile[activeIndex].classList.add('active');
+            indiceIzquierdaMobile = activeIndex;
+          }
+        }
+        
+        if (imagenesDerecha.length > 0 && imagenesDerechaMobile.length > 0) {
+          const activeIndex = Array.from(imagenesDerecha).findIndex(img => img.classList.contains('active'));
+          if (activeIndex >= 0 && activeIndex < imagenesDerechaMobile.length) {
+            imagenesDerechaMobile.forEach(img => img.classList.remove('active'));
+            imagenesDerechaMobile[activeIndex].classList.add('active');
+            indiceDerechaMobile = activeIndex;
+          }
+        }
+      }
+      
+      console.log(`📱 Layout móvil: ${window.innerWidth <= 768 ? 'GALERÍAS CONSECUTIVAS + TEXTOS' : 'ESCRITORIO'}`);
+    });
+    
+    // Reajustar en cambio de tamaño
+    window.addEventListener('resize', function() {
+      if (window.innerWidth <= 768) {
+        document.documentElement.style.height = '100vh';
+        document.body.style.height = '100vh';
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.documentElement.style.height = '';
+        document.body.style.height = '';
+        document.body.style.overflow = '';
+      }
     });
   </script>
 

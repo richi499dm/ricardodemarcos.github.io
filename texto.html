@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -17,6 +17,8 @@
         --cursor-size: 4px;
         --cursor-size-hover: 18px;
         --cursor-opacity: 0.8;
+        /* Color específico para el cursor */
+        --cursor-color: #000000; /* Negro en modo claro */
         }
 
     :root.modo-oscuro {
@@ -25,6 +27,8 @@
         --text-light: #777;
         --background-color: #0e0e0e;
         --hover-bg-color: #2a2a2a;
+        /* Color específico para el cursor en modo oscuro */
+        --cursor-color: #e0e0e0; /* Blanco en modo oscuro */
         }
 
     @font-face {
@@ -39,16 +43,27 @@
    ========================================================================== */
     * {
         cursor: none !important;
+        box-sizing: border-box;
+        }
+
+    html, body, 
+    body *, 
+    body *:hover, 
+    body *:active, 
+    body *:focus,
+    body *::before,
+    body *::after {
+        cursor: none !important;
         }
 
 /* ==========================================================================
-   CURSOR PERSONALIZADO - VERSIÓN SIMPLIFICADA
+   CURSOR PERSONALIZADO - CON COLOR FIJO
    ========================================================================== */
     #custom-cursor {
         position: fixed;
         width: var(--cursor-size);
         height: var(--cursor-size);
-        background-color: var(--text-color);
+        background-color: var(--cursor-color); /* Usa variable específica */
         border-radius: 50%;
         pointer-events: none;
         z-index: 999999;
@@ -58,13 +73,10 @@
             height 0.2s ease,
             background-color 0.3s ease,
             opacity 0.2s ease;
-        mix-blend-mode: difference;
         opacity: var(--cursor-opacity);
-        }
-
-    :root.modo-oscuro #custom-cursor {
-        background-color: #e0e0e0;
-        mix-blend-mode: normal;
+        left: -100px;
+        top: -100px;
+        /* Eliminado mix-blend-mode: difference; */
         }
 
 /* ==========================================================================
@@ -289,7 +301,7 @@
       </div>
       <div class="header-right">
         <div class="header-right-col"> 
-          <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+          <div>Llegas tarde. Subes por una rampa mientras cantas esa canción. Hay mierdas de perro guardadas en bolsas negras atadas con un lazo. El acero suena bajo tus pies. Una barandilla de ballet te separa del abismo. Un Hogar para la Altura de tus Sueños. Vas a salir volando. Te atas los cordones. Las luces se reflejan tan fuerte en el metal que ya no se ve ningún color. Estabas cantando pero ya no. Te rascas la cara llena de aceite. No ves bien qué hay ahí. Te secas una lágrima de líquido refrigerante. Hay una zapatilla en el centro del puente. Sí, es posible que no sea tu zapatilla la que está tirada ahí, en el centro del puente, de lado. Puede que sea de otra persona. Un señor sigue a un perro muy limpio con las manos en los bolsillos. No te ven. Una gota de sudor cuelga del puente de la M-30. Pero te están mirando. Una pelota ha llegado hasta ti. Ahora que estás aquí y te da el aire en la frente. Te miro con las manos en los bolsillos. Ya no deambulas, porque solo pueden deambular los que roban tiempo para ello. Preciosos minutos que se las ingenian para arañar de sus horarios. </div>
           <div>Texto por María Pagola</div>
         </div>
         <div class="header-right-col">
@@ -310,104 +322,107 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Cursor
+      console.log('📄 texto.html cargado');
+      
+      // 1. CURSOR - SISTEMA CON COLOR FIJO
       const cursor = document.getElementById('custom-cursor');
       
       if (cursor) {
-        console.log('Cursor encontrado, inicializando...');
+        console.log('✅ Cursor encontrado, inicializando...');
         
-        // Mover cursor
-        document.addEventListener('mousemove', (e) => {
+        // Asegurar estilos iniciales
+        Object.assign(cursor.style, {
+          position: 'fixed',
+          width: 'var(--cursor-size)',
+          height: 'var(--cursor-size)',
+          backgroundColor: 'var(--cursor-color)', // Usa la variable específica
+          borderRadius: '50%',
+          pointerEvents: 'none',
+          zIndex: '999999',
+          transform: 'translate(-50%, -50%)',
+          transition: 'width 0.2s ease, height 0.2s ease, background-color 0.3s ease, opacity 0.2s ease',
+          opacity: 'var(--cursor-opacity)',
+          left: '-100px',
+          top: '-100px'
+        });
+        
+        // Seguir mouse
+        document.addEventListener('mousemove', function(e) {
           cursor.style.left = e.clientX + 'px';
           cursor.style.top = e.clientY + 'px';
           cursor.style.opacity = 'var(--cursor-opacity)';
         });
         
-        // Hover effect
+        // Hover en elementos interactivos
         const hoverElements = document.querySelectorAll('a, button, .jeep-back');
-        hoverElements.forEach(el => {
-          el.addEventListener('mouseenter', () => {
+        hoverElements.forEach(function(el) {
+          el.addEventListener('mouseenter', function() {
             cursor.style.width = 'var(--cursor-size-hover)';
             cursor.style.height = 'var(--cursor-size-hover)';
-            cursor.style.backgroundColor = '#000';
+            // En modo claro: hover negro sobre fondo claro
+            // En modo oscuro: hover claro sobre fondo oscuro
+            cursor.style.backgroundColor = document.documentElement.classList.contains('modo-oscuro') ? '#ffffff' : '#000000';
           });
           
-          el.addEventListener('mouseleave', () => {
+          el.addEventListener('mouseleave', function() {
             cursor.style.width = 'var(--cursor-size)';
             cursor.style.height = 'var(--cursor-size)';
-            cursor.style.backgroundColor = 'var(--text-color)';
+            // Vuelve al color según el tema
+            cursor.style.backgroundColor = 'var(--cursor-color)';
           });
         });
         
-        // Click effect
-        document.addEventListener('mousedown', () => {
+        // Efecto click
+        document.addEventListener('mousedown', function() {
           cursor.style.transform = 'translate(-50%, -50%) scale(0.7)';
         });
         
-        document.addEventListener('mouseup', () => {
+        document.addEventListener('mouseup', function() {
           cursor.style.transform = 'translate(-50%, -50%) scale(1)';
         });
         
-        // Hide/show
-        document.addEventListener('mouseleave', () => {
+        // Ocultar/mostrar
+        document.addEventListener('mouseleave', function() {
           cursor.style.opacity = '0';
         });
         
-        document.addEventListener('mouseenter', () => {
+        document.addEventListener('mouseenter', function() {
           cursor.style.opacity = 'var(--cursor-opacity)';
         });
         
-        console.log('Cursor inicializado');
+        console.log('✅ Cursor inicializado');
       } else {
-        console.error('No se encontró el elemento #custom-cursor');
+        console.error('❌ No se encontró el elemento #custom-cursor');
       }
       
-      // Tema
+      // 2. TEMA CLARO/OSCURO
       const themeBtn = document.getElementById('theme-switcher-btn');
       
       if (themeBtn) {
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'dark') {
+        // Cargar tema guardado
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
           document.documentElement.classList.add('modo-oscuro');
         }
         
-        themeBtn.addEventListener('click', () => {
-          document.documentElement.classList.toggle('modo-oscuro');
+        // Cambiar tema
+        themeBtn.addEventListener('click', function() {
+          const isDarkMode = document.documentElement.classList.toggle('modo-oscuro');
+          localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
           
-          let theme = 'light';
-          if (document.documentElement.classList.contains('modo-oscuro')) {
-            theme = 'dark';
+          // Actualizar cursor si existe
+          if (cursor) {
+            // La variable CSS ya se actualiza automáticamente
+            // Solo necesitamos forzar la actualización del color
+            cursor.style.backgroundColor = 'var(--cursor-color)';
           }
-          localStorage.setItem('theme', theme);
         });
+        
+        console.log('✅ Sistema de tema inicializado');
       }
+      
+      console.log('🚀 texto.html completamente cargado');
     });
-
-document.addEventListener('DOMContentLoaded', function() {
-  // Crear cursor dinámicamente
-  const cursor = document.createElement('div');
-  cursor.id = 'custom-cursor';
-  cursor.style.cssText = `
-    position: fixed;
-    width: 5px;
-    height: 5px;
-    background: red;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 999999;
-    left: 0;
-    top: 0;
-  `;
-  document.body.appendChild(cursor);
-  
-  console.log('Cursor creado dinámicamente');
-  
-  document.addEventListener('mousemove', (e) => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-  });
-});
-
   </script>
 
 </body>

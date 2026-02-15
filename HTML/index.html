@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+  <meta name="description" content="ARTIST PORTFOLIO">
+<meta name="keywords" content="ARTE, RICARDODEMARCOS, ">
+<meta property="og:title" content="INEEDAJEEP">
+<meta property="og:image" content="https://RICARDODEMARCOS.com/logo.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I NEED A JEEP</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+  <style>
+    /* ==========================================================================
+       VARIABLES GLOBALES
+       ========================================================================== */
+    
+    :root {
+      /* Colores modo claro */
+      --color-fondo: #a1a1a1;
+      --color-texto: beige;
+      --color-texto-hover: rgba(245, 245, 220, 0.7);
+      --color-imagen-fondo: transparent;
+      
+      /* Tipografía */
+      --fuente-principal: 'REX', sans-serif;
+      --tamano-texto: 10.25px;
+      --linea-altura: 12.30px;
+      --peso-texto: 300;
+      
+      /* Espaciados y dimensiones */
+      --espacio-imagenes: 100px;
+      --alto-contenedor: 55vh;
+      --margen-izquierdo: 80px;
+      --margen-derecho: 130px;
+      --posicion-texto-vertical: 440px;
+      
+      /* Responsive */
+      --tablet-breakpoint: 768px;
+      --mobile-breakpoint: 480px;
+      --espacio-responsive: 40px;
+      --ancho-responsive: 90%;
+      
+      /* Cursor */
+      --cursor-size: 4px;
+      --cursor-size-hover: 18px;
+      --cursor-opacity: 0.8;
+    }
+    
+    /* Modo oscuro */
+    :root.modo-oscuro {
+      --color-fondo: #1a1a1a;
+      --color-texto: #e0e0e0;
+      --color-texto-hover: rgba(224, 224, 224, 0.7);
+    }
+    
+    /* ==========================================================================
+       FUENTES
+       ========================================================================== */
+    
+    @font-face {
+      font-family: 'REX';
+      src: url('./fonts/FOT-NewRodinProM.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    
+    /* ==========================================================================
+       RESET Y ELIMINACIÓN DEL CURSOR
+       ========================================================================== */
+    
+    * {
+      box-sizing: border-box;
+      cursor: none !important;
+    }
+    
+    html, body, 
+    body *, 
+    body *:hover, 
+    body *:active, 
+    body *:focus,
+    body *::before,
+    body *::after {
+      cursor: none !important;
+    }
+    
+    /* ==========================================================================
+       CURSOR PERSONALIZADO
+       ========================================================================== */
+    
+    #custom-cursor {
+      position: fixed;
+      width: var(--cursor-size);
+      height: var(--cursor-size);
+      background-color: var(--color-texto);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 999999;
+      transform: translate(-50%, -50%);
+      transition: 
+        width 0.2s ease,
+        height 0.2s ease,
+        background-color 0.3s ease,
+        opacity 0.2s ease;
+      mix-blend-mode: difference;
+      opacity: var(--cursor-opacity);
+      left: -100px;
+      top: -100px;
+    }
+    
+    :root.modo-oscuro #custom-cursor {
+      background-color: #e0e0e0;
+      mix-blend-mode: normal;
+    }
+    
+    /* ==========================================================================
+       ESTILOS BASE
+       ========================================================================== */
+    
+    html {
+      height: 100%;
+    }
+    
+    body {
+      font-family: var(--fuente-principal);
+      margin: 0;
+      background-color: var(--color-fondo);
+      color: var(--color-texto);
+      font-size: var(--tamano-texto);
+      line-height: var(--linea-altura);
+      overflow-x: hidden;
+      height: 100vh;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    
+    /* ==========================================================================
+       LAYOUT PRINCIPAL
+       ========================================================================== */
+    
+    .landing {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr;
+      height: 100vh;
+      width: 100vw;
+    }
+    
+    /* ==========================================================================
+       GALERÍAS DE IMÁGENES
+       ========================================================================== */
+    
+    .image-pair {
+      display: grid;
+      grid-template-columns: auto auto;
+      width: auto;
+      height: 100vh;
+      gap: var(--espacio-imagenes);
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .image-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      height: 100vh;
+    }
+    
+    /* Contenedores específicos por galería */
+    .image-block.left-block .image-container {
+      max-width: 500px;
+    }
+    
+    .image-block.right-block .image-container {
+      max-width: 380px;
+    }
+    
+    /* Estilos base para contenedores de imágenes */
+    .image-container {
+      position: relative;
+      overflow: hidden;
+      background-color: var(--color-imagen-fondo);
+      margin: 0;
+      transition: transform 0.3s ease;
+      cursor: pointer !important;
+    }
+    
+    .image-container:hover {
+      transform: scale(1.01);
+    }
+    
+    /* Galería izquierda - Formato 16:9 (horizontal) */
+    .image-block.left-block .image-container {
+      width: 100%;
+      max-width: 600px;
+      height: var(--alto-contenedor);
+      aspect-ratio: 16/9;
+    }
+    
+    /* Galería derecha - Formato 4:5 (vertical) */
+    .image-block.right-block .image-container {
+      width: 100%;
+      max-width: 400px;
+      height: var(--alto-contenedor);
+      aspect-ratio: 4/5;
+    }
+    
+    /* Imágenes dentro de los contenedores */
+    .image-container img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .image-container img.active {
+      opacity: 1;
+    }
+    
+    /* ==========================================================================
+       TEXTO Y NAVEGACIÓN
+       ========================================================================== */
+    
+    .text-left,
+    .text-right {
+      position: absolute;
+      top: var(--posicion-texto-vertical);
+      display: flex;
+      align-items: flex-start;
+      font-family: var(--fuente-principal);
+      font-weight: var(--peso-texto);
+      font-size: var(--tamano-texto);
+      line-height: var(--linea-altura);
+      color: var(--color-texto);
+      transition: color 0.3s ease;
+    }
+    
+    .text-left {
+      left: var(--margen-izquierdo);
+    }
+    
+    .text-right {
+      right: var(--margen-derecho);
+      text-align: left;
+      display: block;
+    }
+    
+    /* Enlaces */
+    .text-right a {
+      display: inline-block;
+      color: inherit;
+      text-decoration: none;
+      font-family: inherit;
+      font-weight: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      text-align: left;
+      width: 100%;
+      transition: color 0.2s ease, opacity 0.2s ease;
+    }
+    
+    .text-right a:hover {
+      color: var(--color-texto-hover);
+      opacity: 0.8;
+    }
+    
+    /* ==========================================================================
+       TOGGLE MODO OSCURO/CLARO
+       ========================================================================== */
+    
+    .toggle-modo-icono {
+      position: fixed;
+      top: 40px;
+      right: 80px;
+      width: 10.25px;
+      height: 12.30px;
+      z-index: 1000;
+      opacity: 0.7;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      background: transparent;
+      border: none;
+    }
+    
+    .toggle-modo-icono:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+    
+    /* Icono de SOL (modo claro activo) */
+    .toggle-modo-icono::before {
+      content: "W/";
+      font-size: 10.25px;
+      color: var(--color-texto);
+      display: block;
+      line-height: 1;
+      transition: all 0.3s ease;
+    }
+    
+    /* Cuando está en modo oscuro, cambia a LUNA */
+    :root.modo-oscuro .toggle-modo-icono::before {
+      content: "/B";
+    }
+    
+    /* ==========================================================================
+       RESPONSIVE DESIGN
+       ========================================================================== */
+    
+    @media (max-width: 768px) {
+      :root {
+        --espacio-imagenes: 40px;
+        --margen-izquierdo: 20px;
+        --margen-derecho: 20px;
+        --posicion-texto-vertical: auto;
+        --ancho-responsive: 90%;
+        --cursor-size: 10px;
+        --cursor-size-hover: 12px;
+      }
+      
+      .landing {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+      }
+      
+      .image-pair {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        height: auto;
+        padding: var(--espacio-responsive) 0;
+      }
+      
+      .image-block {
+        height: auto;
+      }
+      
+      .image-block.left-block,
+      .image-block.right-block {
+        align-items: center;
+        padding: 0 20px;
+      }
+      
+      /* Formato intermedio para móvil */
+      .image-block.left-block .image-container,
+      .image-block.right-block .image-container {
+        width: var(--ancho-responsive);
+        max-width: 500px;
+        aspect-ratio: 4/3;
+      }
+      
+      .text-left, .text-right {
+        position: static;
+        text-align: center;
+        margin: 30px auto;
+        padding: 0 20px;
+        font-size: 11px;
+        letter-spacing: 0.3px;
+      }
+      
+      .text-right {
+        text-align: center;
+      }
+      
+      .text-right a {
+        text-align: center;
+      }
+      
+      .toggle-modo-icono {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 12px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      :root {
+        --ancho-responsive: 95%;
+        --alto-contenedor: 40vh;
+        --cursor-size: 8px;
+        --cursor-size-hover: 10px;
+      }
+      
+      .image-block.left-block .image-container,
+      .image-block.right-block .image-container {
+        width: var(--ancho-responsive);
+        aspect-ratio: 1/1;
+      }
+      
+      .text-left, .text-right {
+        font-size: 10px;
+      }
+    }
+    
+    /* ==========================================================================
+       UTILIDADES
+       ========================================================================== */
+    
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Cursor personalizado -->
+  <div id="custom-cursor"></div>
+
+  <!-- Botón de cambio de tema -->
+  <button class="toggle-modo-icono" id="toggleModo" aria-label="Cambiar modo claro/oscuro"></button>
+
+  <div class="landing">
+    <div class="image-pair">
+      
+      <!-- GALERÍA IZQUIERDA -->
+      <div class="image-block left-block">
+        <div class="image-container" id="galeria-izquierda">
+          <img src="images/img1.jpg" class="active" alt="Imagen 1">
+          <img src="images/img2.jpg" alt="Imagen 2">
+          <img src="images/img9.jpg" alt="Imagen 9">
+        </div>
+      </div>
+      
+      <!-- GALERÍA DERECHA -->
+      <div class="image-block right-block">
+        <div class="image-container" id="galeria-derecha">
+          <img src="images/img4.jpg" class="active" alt="Imagen 4">
+          <img src="images/img3.jpg" alt="Imagen 3">
+          <img src="images/img8.jpg" alt="Imagen 8">
+          <img src="images/img10.jpg" alt="Imagen 10">
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="text-left">
+      I NEED A JEEP<br>
+      Ricardo de Marcos <br>
+      Enero 2025, Chaiz Studio
+    </div>
+
+    <div class="text-right">
+      <a href="texto.html">texto.doc</a><br>
+      <a href="https://www.youtube.com/watch?v=it66ViKgLj8" target="_blank" rel="noopener noreferrer">.mov-exposición</a>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================================================
+    // SISTEMA DE CURSOR
+    // ==========================================================================
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('🏠 index.html cargado');
+      
+      // 1. CURSOR
+      const cursor = document.getElementById('custom-cursor');
+      
+      if (cursor) {
+        // Asegurar estilos iniciales
+        Object.assign(cursor.style, {
+          position: 'fixed',
+          width: 'var(--cursor-size)',
+          height: 'var(--cursor-size)',
+          backgroundColor: 'var(--color-texto)',
+          borderRadius: '50%',
+          pointerEvents: 'none',
+          zIndex: '999999',
+          transform: 'translate(-50%, -50%)',
+          transition: 'width 0.2s ease, height 0.2s ease, background-color 0.3s ease, opacity 0.2s ease',
+          mixBlendMode: 'difference',
+          opacity: 'var(--cursor-opacity)',
+          left: '-100px',
+          top: '-100px'
+        });
+        
+        // Seguir mouse
+        document.addEventListener('mousemove', function(e) {
+          cursor.style.left = e.clientX + 'px';
+          cursor.style.top = e.clientY + 'px';
+          cursor.style.opacity = 'var(--cursor-opacity)';
+        });
+        
+        // Hover en elementos interactivos
+        const hoverElements = document.querySelectorAll('a, button, .toggle-modo-icono, .image-container');
+        hoverElements.forEach(function(el) {
+          el.addEventListener('mouseenter', function() {
+            cursor.style.width = 'var(--cursor-size-hover)';
+            cursor.style.height = 'var(--cursor-size-hover)';
+            cursor.style.backgroundColor = '#000000';
+          });
+          
+          el.addEventListener('mouseleave', function() {
+            cursor.style.width = 'var(--cursor-size)';
+            cursor.style.height = 'var(--cursor-size)';
+            cursor.style.backgroundColor = 'var(--color-texto)';
+          });
+        });
+        
+        // Efecto click
+        document.addEventListener('mousedown', function() {
+          cursor.style.transform = 'translate(-50%, -50%) scale(0.7)';
+        });
+        
+        document.addEventListener('mouseup', function() {
+          cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+        });
+        
+        // Ocultar/mostrar
+        document.addEventListener('mouseleave', function() {
+          cursor.style.opacity = '0';
+        });
+        
+        document.addEventListener('mouseenter', function() {
+          cursor.style.opacity = 'var(--cursor-opacity)';
+        });
+        
+        console.log('✅ Cursor inicializado');
+      }
+      
+      // 2. TEMA CLARO/OSCURO
+      const themeBtn = document.getElementById('toggleModo');
+      
+      if (themeBtn) {
+        // Cargar tema guardado
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+          document.documentElement.classList.add('modo-oscuro');
+        }
+        
+        // Cambiar tema
+        themeBtn.addEventListener('click', function() {
+          const isDarkMode = document.documentElement.classList.toggle('modo-oscuro');
+          localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+          
+          // Actualizar cursor si existe
+          if (cursor) {
+            if (isDarkMode) {
+              cursor.style.backgroundColor = '#e0e0e0';
+              cursor.style.mixBlendMode = 'normal';
+            } else {
+              cursor.style.backgroundColor = 'var(--color-texto)';
+              cursor.style.mixBlendMode = 'difference';
+            }
+          }
+        });
+        
+        console.log('✅ Sistema de tema inicializado');
+      }
+      
+      // 3. GALERÍAS DE IMÁGENES - SISTEMA MEJORADO
+      
+      // Galería izquierda
+      const galeriaIzquierda = document.getElementById('galeria-izquierda');
+      const imagenesIzquierda = galeriaIzquierda.querySelectorAll('img');
+      let indiceIzquierda = 0;
+      
+      galeriaIzquierda.addEventListener('click', function() {
+        console.log('🖱️ Click en galería IZQUIERDA');
+        
+        // Ocultar imagen actual
+        imagenesIzquierda[indiceIzquierda].classList.remove('active');
+        
+        // Calcular siguiente índice
+        indiceIzquierda = (indiceIzquierda + 1) % imagenesIzquierda.length;
+        
+        // Mostrar siguiente imagen
+        imagenesIzquierda[indiceIzquierda].classList.add('active');
+        
+        console.log(`📸 Galería izquierda: Imagen ${indiceIzquierda + 1}/${imagenesIzquierda.length}`);
+      });
+      
+      // Galería derecha
+      const galeriaDerecha = document.getElementById('galeria-derecha');
+      const imagenesDerecha = galeriaDerecha.querySelectorAll('img');
+      let indiceDerecha = 0;
+      
+      galeriaDerecha.addEventListener('click', function() {
+        console.log('🖱️ Click en galería DERECHA');
+        
+        // Ocultar imagen actual
+        imagenesDerecha[indiceDerecha].classList.remove('active');
+        
+        // Calcular siguiente índice
+        indiceDerecha = (indiceDerecha + 1) % imagenesDerecha.length;
+        
+        // Mostrar siguiente imagen
+        imagenesDerecha[indiceDerecha].classList.add('active');
+        
+        console.log(`📸 Galería derecha: Imagen ${indiceDerecha + 1}/${imagenesDerecha.length}`);
+      });
+      
+      console.log(`📸 Galerías configuradas:`);
+      console.log(`   - Izquierda: ${imagenesIzquierda.length} imágenes`);
+      console.log(`   - Derecha: ${imagenesDerecha.length} imágenes`);
+      
+      console.log('🚀 index.html completamente cargado');
+    });
+  </script>
+
+</body>
+</html>
