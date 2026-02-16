@@ -34,7 +34,7 @@
       --tablet-breakpoint: 768px;
       --mobile-breakpoint: 480px;
       --espacio-responsive: 40px;
-      --ancho-responsive: 90%;
+      --ancho-responsive: 85%;
       
       /* Cursor */
       --cursor-size: 4px;
@@ -394,7 +394,6 @@
         --ancho-responsive: 85%;
         --cursor-size: 10px;
         --cursor-size-hover: 12px;
-        --alto-contenedor: 30vh;
       }
       
       /* ELIMINAR SCROLL COMPLETAMENTE */
@@ -427,72 +426,77 @@
         flex-direction: column;
         height: 100vh;
         width: 100vw;
-        padding: 60px 0 0 0; /* Espacio para botones superiores */
+        padding: 60px 0 15px 0;
+        box-sizing: border-box;
       }
       
       /* SECCIÓN DE GALERÍAS CONSECUTIVAS */
       .gallery-section {
         display: flex;
         flex-direction: column;
-        height: 70vh; /* 70% de la pantalla para galerías */
+        height: 65vh;
         width: 100%;
-        gap: 10px;
+        gap: 8px;
         justify-content: center;
         align-items: center;
         flex-shrink: 0;
       }
       
-      /* BLOQUES DE IMÁGENES CONSECUTIVAS */
-      .image-block.mobile-block {
+      /* PRIMERA GALERÍA (IZQUIERDA) - EN MÓVIL */
+      .image-block.left-block.mobile-block {
         width: var(--ancho-responsive);
-        max-width: 500px;
+        max-width: 400px;
+        margin: 0 auto 5px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .image-block.left-block.mobile-block .image-container {
+        width: 100%;
+        height: auto;
+        max-height: 28vh;
+        aspect-ratio: 16/9;
+      }
+      
+      /* SEGUNDA GALERÍA (DERECHA) - EN MÓVIL */
+      .image-block.right-block.mobile-block {
+        width: var(--ancho-responsive);
+        max-width: 400px;
         margin: 0 auto;
         display: flex;
         justify-content: center;
         align-items: center;
       }
       
-      /* PRIMERA GALERÍA (IZQUIERDA) - EN MÓVIL */
-      .image-block.left-block.mobile-block {
-        height: 33vh; /* 33% de la altura de galerías */
-        margin-bottom: 5px;
-      }
-      
-      .image-block.left-block.mobile-block .image-container {
-        width: 100%;
-        height: 100%;
-        max-height: 30vh;
-        aspect-ratio: 16/9;
-      }
-      
-      /* SEGUNDA GALERÍA (DERECHA) - EN MÓVIL */
-      .image-block.right-block.mobile-block {
-        height: 33vh; /* 33% de la altura de galerías */
-        margin-top: 5px;
-      }
-      
       .image-block.right-block.mobile-block .image-container {
         width: 100%;
-        height: 100%;
-        max-height: 30vh;
-        aspect-ratio: 4/5;
+        height: auto;
+        max-height: 80vh;
+        aspect-ratio: 16/9; /* Por defecto 16:9 como la izquierda */
+      }
+      
+      /* Ajuste para centrar mejor las imágenes cuando cambia el aspect-ratio */
+      .image-block.right-block.mobile-block .image-container img {
+        object-position: center center;
+        transition: object-position 0.3s ease;
       }
       
       /* SECCIÓN DE TEXTOS - DEBAJO DE GALERÍAS */
       .text-section {
         display: flex;
         flex-direction: column;
-        height: 30vh; /* 30% de la pantalla para textos */
+        height: 25vh;
         width: 100%;
-        padding: 15px 20px 10px 20px;
-        gap: 15px;
-        justify-content: flex-start;
+        padding: 5px 20px 10px 20px;
+        gap: 8px;
+        justify-content: flex-end;
         align-items: flex-start;
         flex-shrink: 0;
         box-sizing: border-box;
       }
       
-      /* TEXTOS EN MÓVIL - UNO DEBAJO DEL OTRO */
+      /* TEXTOS EN MÓVIL */
       .text-left.mobile-text,
       .text-right.mobile-text {
         position: static;
@@ -512,6 +516,7 @@
       .text-right.mobile-text {
         order: 2;
         text-align: left;
+        margin-top: 5px;
       }
       
       .text-right.mobile-text a {
@@ -553,38 +558,39 @@
       }
     }
     
-    /* MÓVIL PEQUEÑO (480px o menos) */
+    /* MÓVIL PEQUEÑO (480px o menos) - AJUSTES GENERALES */
     @media (max-width: 480px) {
       :root {
         --ancho-responsive: 90%;
         --cursor-size: 8px;
         --cursor-size-hover: 10px;
-        --alto-contenedor: 28vh;
       }
       
       .content-wrapper {
-        padding: 55px 0 0 0;
+        padding: 55px 0 10px 0;
       }
       
       .gallery-section {
-        height: 65vh;
-        gap: 8px;
+        height: 60vh;
+        gap: 6px;
       }
       
       .image-block.left-block.mobile-block,
       .image-block.right-block.mobile-block {
-        height: 30vh;
+        max-width: 350px;
       }
       
-      .image-block.left-block.mobile-block .image-container,
+      .image-block.left-block.mobile-block .image-container {
+        max-height: 26vh;
+      }
+      
       .image-block.right-block.mobile-block .image-container {
-        max-height: 28vh;
+        max-height: 50vh;
       }
       
       .text-section {
-        height: 35vh;
-        padding: 10px 15px 5px 15px;
-        gap: 10px;
+        height: 27vh;
+        padding: 5px 15px 8px 15px;
       }
       
       .text-left.mobile-text,
@@ -605,36 +611,49 @@
       }
     }
     
-    /* MÓVIL MUY PEQUEÑO (320px) */
+    /* ==========================================================================
+       MÓVIL MUY PEQUEÑO (320px y menos) - 4:5 OBLIGATORIO
+       ========================================================================== */
     @media (max-width: 320px) {
       :root {
         --ancho-responsive: 92%;
-        --alto-contenedor: 25vh;
       }
       
       .content-wrapper {
-        padding: 50px 0 0 0;
+        padding: 50px 0 5px 0;
       }
       
       .gallery-section {
-        height: 62vh;
-        gap: 6px;
+        height: 65vh;
+        gap: 5px;
       }
       
       .image-block.left-block.mobile-block,
       .image-block.right-block.mobile-block {
-        height: 28vh;
+        max-width: 280px;
       }
       
-      .image-block.left-block.mobile-block .image-container,
+      .image-block.left-block.mobile-block .image-container {
+        max-height: 24vh;
+        aspect-ratio: 16/9; /* La izquierda se mantiene 16:9 */
+      }
+      
+      /* LA DERECHA SIEMPRE 4:5 A PARTIR DE 320px */
       .image-block.right-block.mobile-block .image-container {
-        max-height: 26vh;
+        aspect-ratio: 4/5 !important; /* Forzamos 4:5 con !important */
+        max-height: 42vh;
+        width: 100%;
+      }
+      
+      /* Ajuste específico para centrar imágenes en 4:5 */
+      .image-block.right-block.mobile-block .image-container img {
+        object-position: 50% 50%;
       }
       
       .text-section {
-        height: 38vh;
-        padding: 8px 12px 5px 12px;
-        gap: 8px;
+        height: 30vh;
+        padding: 5px 12px 5px 12px;
+        gap: 5px;
       }
       
       .text-left.mobile-text,
