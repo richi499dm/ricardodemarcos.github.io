@@ -385,7 +385,7 @@
       }
     }
     
-    /* MÓVIL Y TABLET VERTICAL (768px o menos) - NUEVO DISEÑO */
+    /* MÓVIL Y TABLET VERTICAL (768px o menos) - CORREGIDO */
     @media (max-width: 768px) {
       :root {
         --espacio-imagenes: 15px;
@@ -420,7 +420,7 @@
         left: 0;
       }
       
-      /* CONTENEDOR DE CONTENIDO - GALERÍAS PRIMERO, TEXTOS DESPUÉS */
+      /* CONTENEDOR DE CONTENIDO */
       .content-wrapper {
         display: flex;
         flex-direction: column;
@@ -430,19 +430,19 @@
         box-sizing: border-box;
       }
       
-      /* SECCIÓN DE GALERÍAS CONSECUTIVAS */
+      /* SECCIÓN DE GALERÍAS */
       .gallery-section {
         display: flex;
         flex-direction: column;
-        height: 65vh;
         width: 100%;
         gap: 8px;
         justify-content: center;
         align-items: center;
-        flex-shrink: 0;
+        flex: 3; /* 3 partes del espacio */
+        min-height: 0;
       }
       
-      /* PRIMERA GALERÍA (IZQUIERDA) - EN MÓVIL */
+      /* PRIMERA GALERÍA (IZQUIERDA) */
       .image-block.left-block.mobile-block {
         width: var(--ancho-responsive);
         max-width: 400px;
@@ -455,11 +455,11 @@
       .image-block.left-block.mobile-block .image-container {
         width: 100%;
         height: auto;
-        max-height: 28vh;
+        max-height: 30vh;
         aspect-ratio: 16/9;
       }
       
-      /* SEGUNDA GALERÍA (DERECHA) - EN MÓVIL */
+      /* SEGUNDA GALERÍA (DERECHA) - CORREGIDA */
       .image-block.right-block.mobile-block {
         width: var(--ancho-responsive);
         max-width: 400px;
@@ -472,27 +472,21 @@
       .image-block.right-block.mobile-block .image-container {
         width: 100%;
         height: auto;
-        max-height: 80vh;
-        aspect-ratio: 16/9; /* Por defecto 16:9 como la izquierda */
+        max-height: 35vh; /* Altura controlada */
+        aspect-ratio: 16/9; /* Por defecto 16:9 */
       }
       
-      /* Ajuste para centrar mejor las imágenes cuando cambia el aspect-ratio */
-      .image-block.right-block.mobile-block .image-container img {
-        object-position: center center;
-        transition: object-position 0.3s ease;
-      }
-      
-      /* SECCIÓN DE TEXTOS - DEBAJO DE GALERÍAS */
+      /* SECCIÓN DE TEXTOS */
       .text-section {
         display: flex;
         flex-direction: column;
-        height: 25vh;
         width: 100%;
-        padding: 5px 20px 10px 20px;
+        padding: 5px 20px 15px 20px;
         gap: 8px;
         justify-content: flex-end;
         align-items: flex-start;
-        flex-shrink: 0;
+        flex: 1; /* 1 parte del espacio */
+        min-height: 0;
         box-sizing: border-box;
       }
       
@@ -523,7 +517,7 @@
         text-align: left;
       }
       
-      /* BOTONES SUPERIORES EN MÓVIL */
+      /* BOTONES SUPERIORES */
       .jeep-back {
         position: fixed;
         top: 20px;
@@ -540,7 +534,7 @@
         z-index: 1001;
       }
       
-      /* OCULTAR ELEMENTOS DE ESCRITORIO EN MÓVIL */
+      /* OCULTAR ELEMENTOS DE ESCRITORIO */
       .image-pair,
       .text-left:not(.mobile-text),
       .text-right:not(.mobile-text) {
@@ -558,7 +552,23 @@
       }
     }
     
-    /* MÓVIL PEQUEÑO (480px o menos) - AJUSTES GENERALES */
+    /* MÓVIL PEQUEÑO (menos de 450px) - CAMBIA A 4:5 */
+    @media (max-width: 449px) {
+      .image-block.right-block.mobile-block .image-container {
+        aspect-ratio: 4/5;
+        max-height: 38vh; /* Un poco más alto para formato vertical */
+      }
+      
+      .gallery-section {
+        flex: 3.5; /* Un poco más de espacio para la imagen vertical */
+      }
+      
+      .text-section {
+        flex: 0.8; /* Un poco menos de espacio para textos */
+      }
+    }
+    
+    /* MÓVIL PEQUEÑO (480px o menos) - AJUSTES */
     @media (max-width: 480px) {
       :root {
         --ancho-responsive: 90%;
@@ -570,27 +580,17 @@
         padding: 55px 0 10px 0;
       }
       
-      .gallery-section {
-        height: 60vh;
-        gap: 6px;
-      }
-      
       .image-block.left-block.mobile-block,
       .image-block.right-block.mobile-block {
         max-width: 350px;
       }
       
       .image-block.left-block.mobile-block .image-container {
-        max-height: 26vh;
+        max-height: 28vh;
       }
       
       .image-block.right-block.mobile-block .image-container {
-        max-height: 50vh;
-      }
-      
-      .text-section {
-        height: 27vh;
-        padding: 5px 15px 8px 15px;
+        max-height: 33vh;
       }
       
       .text-left.mobile-text,
@@ -611,9 +611,7 @@
       }
     }
     
-    /* ==========================================================================
-       MÓVIL MUY PEQUEÑO (320px y menos) - 4:5 OBLIGATORIO
-       ========================================================================== */
+    /* MÓVIL MUY PEQUEÑO (320px y menos) - 4:5 OBLIGATORIO */
     @media (max-width: 320px) {
       :root {
         --ancho-responsive: 92%;
@@ -623,37 +621,19 @@
         padding: 50px 0 5px 0;
       }
       
-      .gallery-section {
-        height: 65vh;
-        gap: 5px;
-      }
-      
       .image-block.left-block.mobile-block,
       .image-block.right-block.mobile-block {
         max-width: 280px;
       }
       
       .image-block.left-block.mobile-block .image-container {
-        max-height: 24vh;
-        aspect-ratio: 16/9; /* La izquierda se mantiene 16:9 */
+        max-height: 25vh;
+        aspect-ratio: 16/9;
       }
       
-      /* LA DERECHA SIEMPRE 4:5 A PARTIR DE 320px */
       .image-block.right-block.mobile-block .image-container {
-        aspect-ratio: 4/5 !important; /* Forzamos 4:5 con !important */
-        max-height: 42vh;
-        width: 100%;
-      }
-      
-      /* Ajuste específico para centrar imágenes en 4:5 */
-      .image-block.right-block.mobile-block .image-container img {
-        object-position: 50% 50%;
-      }
-      
-      .text-section {
-        height: 30vh;
-        padding: 5px 12px 5px 12px;
-        gap: 5px;
+        aspect-ratio: 4/5 !important;
+        max-height: 35vh;
       }
       
       .text-left.mobile-text,
@@ -698,7 +678,6 @@
 </head>
 
 <body>
-
   <!-- Cursor personalizado -->
   <div id="custom-cursor"></div>
 
@@ -712,7 +691,6 @@
   </button>
 
   <div class="landing">
-    
     <!-- ESCRITORIO: layout original -->
     <div class="image-pair">
       <div class="image-block left-block">
@@ -750,16 +728,13 @@
 
     <div class="text-right">
       <a href="texto.html">texto.doc</a><br>
-  
     </div>
 
     <!-- MÓVIL: nuevo layout vertical -->
     <div class="content-wrapper">
-      
-      <!-- SECCIÓN 1: Galerías consecutivas -->
+      <!-- SECCIÓN 1: Galerías -->
       <div class="gallery-section">
-        
-        <!-- Galería izquierda (primera en móvil) -->
+        <!-- Galería izquierda -->
         <div class="image-block left-block mobile-block">
           <div class="image-container" id="galeria-izquierda-mobile">
             <img src="images/img01.webp" class="active" alt="Image 1">
@@ -774,7 +749,7 @@
           </div>
         </div>
         
-        <!-- Galería derecha (segunda en móvil) -->
+        <!-- Galería derecha -->
         <div class="image-block right-block mobile-block">
           <div class="image-container" id="galeria-derecha-mobile">
             <img src="images/img07.webp" class="active" alt="Image 7">
@@ -785,34 +760,28 @@
             <img src="images/img14.webp" alt="Image 14">
           </div>
         </div>
-        
       </div>
       
-      <!-- SECCIÓN 2: Textos consecutivos -->
+      <!-- SECCIÓN 2: Textos -->
       <div class="text-section">
-        
-        <!-- Texto izquierdo (primero en móvil) -->
+        <!-- Texto izquierdo -->
         <div class="text-left mobile-text">
           <br>
           Enero 2025, Chaiz Studio <br>
           Curado por Arturo F. Peral
         </div>
         
-        <!-- Texto derecho (segundo en móvil) -->
+        <!-- Texto derecho -->
         <div class="text-right mobile-text">
           <a href="texto.html">texto.doc</a><br>
-          
         </div>
-        
       </div>
-      
     </div>
-    
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('🏠 index.html cargado - GALERÍAS CONSECUTIVAS EN MÓVIL');
+      console.log('🏠 index.html cargado');
       
       // 1. CURSOR
       const cursor = document.getElementById('custom-cursor');
@@ -947,19 +916,7 @@
         });
       }
       
-      // 5. DESACTIVAR HOVER EN IMÁGENES
-      const imageContainers = document.querySelectorAll('.image-container');
-      imageContainers.forEach(function(container) {
-        container.addEventListener('mouseenter', function() {
-          if (cursor) {
-            cursor.style.width = 'var(--cursor-size)';
-            cursor.style.height = 'var(--cursor-size)';
-            cursor.style.backgroundColor = 'var(--color-texto)';
-          }
-        });
-      });
-      
-      // 6. PREVENIR SCROLL EN MÓVIL
+      // 5. PREVENIR SCROLL
       function prevenirScroll(event) {
         if (window.innerWidth <= 768) {
           event.preventDefault();
@@ -971,13 +928,13 @@
       document.addEventListener('touchmove', prevenirScroll, { passive: false });
       document.addEventListener('wheel', prevenirScroll, { passive: false });
       
-      // Forzar tamaño en móvil al cargar
+      // Forzar tamaño en móvil
       if (window.innerWidth <= 768) {
         document.documentElement.style.height = '100vh';
         document.body.style.height = '100vh';
         document.body.style.overflow = 'hidden';
         
-        // Sincronizar galerías móviles con escritorio si es necesario
+        // Sincronizar galerías
         if (imagenesIzquierda.length > 0 && imagenesIzquierdaMobile.length > 0) {
           const activeIndex = Array.from(imagenesIzquierda).findIndex(img => img.classList.contains('active'));
           if (activeIndex >= 0 && activeIndex < imagenesIzquierdaMobile.length) {
@@ -996,11 +953,8 @@
           }
         }
       }
-      
-      console.log(`📱 Layout móvil: ${window.innerWidth <= 768 ? 'GALERÍAS CONSECUTIVAS + TEXTOS' : 'ESCRITORIO'}`);
     });
     
-    // Reajustar en cambio de tamaño
     window.addEventListener('resize', function() {
       if (window.innerWidth <= 768) {
         document.documentElement.style.height = '100vh';
@@ -1013,6 +967,5 @@
       }
     });
   </script>
-
 </body>
 </html>
