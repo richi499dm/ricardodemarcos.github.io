@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Castellón, 2025</title>
+  <style>
+    
+    :root {
+        --border-color: #e5e5e5;
+        --text-color: #000000;
+        --text-light: #888;
+        --background-color: #ffffff;
+        --hover-bg-color: #e9e9e9;
+        --cursor-size: 4px;
+        --cursor-size-hover: 18px;
+        --cursor-opacity: 0.8;
+        --cursor-color: #000000;
+        }
+
+    :root.modo-oscuro {
+        --border-color: #3a3a3a;
+        --text-color: #e0e0e0;
+        --text-light: #777;
+        --background-color: #0e0e0e;
+        --hover-bg-color: #2a2a2a;
+        --cursor-color: #e0e0e0;
+        }
+
+    @font-face {
+        font-family: 'REX';
+        src: url('./fonts/FOT-NewRodinProM.otf') format('opentype');
+        font-weight: normal;
+        font-style: normal;
+        }
+        
+    /* ELIMINACIÓN COMPLETA DEL CURSOR */
+    * {
+        cursor: none !important;
+        box-sizing: border-box;
+        }
+
+    html, body, 
+    body *, 
+    body *:hover, 
+    body *:active, 
+    body *:focus,
+    body *::before,
+    body *::after {
+        cursor: none !important;
+        }
+
+    /* ELIMINAR SCROLL COMPLETAMENTE */
+    html, body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* ELIMINA TODO EL SCROLL */
+        height: 100vh;
+        width: 100vw;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    body {
+        font-family: 'REX', sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        font-size: 0.9em;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+    /* CURSOR PERSONALIZADO */
+    #custom-cursor {
+        position: fixed;
+        width: var(--cursor-size);
+        height: var(--cursor-size);
+        background-color: var(--cursor-color);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 999999;
+        transform: translate(-50%, -50%);
+        transition: 
+            width 0.2s ease,
+            height 0.2s ease,
+            background-color 0.3s ease,
+            opacity 0.2s ease;
+        opacity: var(--cursor-opacity);
+        left: -100px;
+        top: -100px;
+        }
+
+    .single-landing {
+        height: 100vh;
+        width: 100vw;
+        max-width: 100vw;
+        max-height: 100vh;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding: 30px 0;
+        box-sizing: border-box;
+        overflow: hidden; /* IMPORTANTE */
+    }
+
+    a { 
+        color: var(--text-color); 
+        text-decoration: none; 
+    }
+    a:hover { 
+        color: var(--text-light); 
+    }
+
+    /* BOTÓN VOLVER */
+    .jeep-back {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        color: var(--text-color);
+        text-decoration: none;
+        font-size: 0.8em;
+        z-index: 1000;
+        padding: 0;
+        margin: 0;
+        background: none;
+        border: none;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+    }
+    .jeep-back:hover { 
+        opacity: 0.7; 
+        transform: translateX(-2px); 
+    }
+
+    /* BOTÓN DE TEMA */
+    #theme-switcher-btn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        font: inherit;
+        color: var(--text-color);
+        font-size: 1em;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+    #theme-switcher-btn:hover { 
+        opacity: 0.7; 
+    }
+    #theme-switcher-btn .icon-light, 
+    #theme-switcher-btn .icon-dark { 
+        display: none; 
+    }
+    :root:not(.modo-oscuro) #theme-switcher-btn .icon-light { 
+        display: block; 
+    }
+    :root.modo-oscuro #theme-switcher-btn .icon-dark { 
+        display: block; 
+    }
+
+    /* IMAGEN ÚNICA CENTRADA */
+    .horizontal-layout-wrapper {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        flex: 1;
+    }
+
+    .single-image-wrapper {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 0 80px 0;
+        overflow: hidden;
+    }
+
+    .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: auto;
+        height: 85%;
+        max-width: 100vw;
+        max-height: 90vh;
+        overflow: hidden;
+    }
+
+    .project-image {
+        height: 100%;
+        width: auto;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain; /* Mejor que cover para evitar desbordamiento */
+        background-color: var(--hover-bg-color);
+        cursor: pointer;
+        display: block;
+    }
+
+    .image-caption { 
+        display: none; 
+    }
+
+    /* PIE DE PÁGINA */
+    .info-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 900;
+        pointer-events: none;
+        padding: 20px;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        background: linear-gradient(to top, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 100%);
+    }
+
+    .info-footer > div {
+        pointer-events: auto;
+        color: #959595eb;
+        opacity: 0.85;
+        font-size: 0.8em;
+        letter-spacing: 0.3px;
+    }
+
+    .info-footer .left-info {
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .info-footer .right-info {
+        text-align: right;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    /* LIGHTBOX */
+    #lightbox-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(235, 233, 233, 0.952);
+        z-index: 99999;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    #lightbox-overlay.active {
+        display: flex;
+    }
+
+    #lightbox-img {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+    }
+
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+        .single-landing {
+            padding: 0;
+            padding-top: 80px;
+            padding-bottom: 30px;
+        }
+
+        .jeep-back { 
+            top: 15px; 
+            left: 15px; 
+        }
+        
+        #theme-switcher-btn { 
+            top: 15px; 
+            right: 15px; 
+        }
+
+        .horizontal-layout-wrapper {
+            flex-direction: column;
+            height: 100%;
+            align-items: stretch;
+        }
+
+        .single-image-wrapper {
+            width: 100%;
+            height: 100%;
+            padding: 20px 0 100px 0;
+        }
+
+        .image-container {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-image {
+            width: 100%;
+            height: auto;
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .info-footer {
+            padding: 15px 20px 20px 20px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 5px;
+            background: linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+        }
+        
+        .info-footer .right-info {
+            text-align: left;
+        }
+
+        #lightbox-close {
+            top: 20px;
+            right: 20px;
+            font-size: 1.5em;
+            width: 35px;
+            height: 35px;
+            color: #555;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .single-landing { 
+            padding-top: 70px; 
+        }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CURSOR PERSONALIZADO -->
+  <div id="custom-cursor"></div>
+
+  <!-- BOTÓN VOLVER -->
+  <a href="index.html" class="jeep-back">RICARDO DE MARCOS</a>
+
+  <!-- BOTÓN DE TEMA -->
+  <button id="theme-switcher-btn">
+    <span class="icon-light">/B</span>
+    <span class="icon-dark">/W</span>
+  </button>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <div class="single-landing">
+      
+      <div class="horizontal-layout-wrapper">
+
+          <!-- IMAGEN ÚNICA CENTRADA -->
+          <div class="single-image-wrapper">
+            
+            <div class="image-container">
+              <img src="IMAGES/03/img01.webp" alt="Proyecto 1 - Imagen 1" class="project-image">
+            </div>
+
+          </div>
+
+      </div> 
+
+  </div> 
+
+  <!-- LIGHTBOX OVERLAY -->
+  <div id="lightbox-overlay">
+      <span id="lightbox-close">&times;</span>
+      <img id="lightbox-img" src="" alt="Imagen ampliada">
+  </div>
+
+  <!-- INFO FOOTER -->
+  <div class="info-footer">
+      <div class="left-info">
+          <span>Untitle</span>
+          <span>Castellón, 2025</span>
+      </div>
+      
+  </div>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('📄 Proyecto Untitle cargado');
+      
+      // 1. CURSOR
+      const cursor = document.getElementById('custom-cursor');
+      
+      if (cursor) {
+        document.addEventListener('mousemove', function(e) {
+          cursor.style.left = e.clientX + 'px';
+          cursor.style.top = e.clientY + 'px';
+          cursor.style.opacity = 'var(--cursor-opacity)';
+        });
+        
+        const hoverElements = document.querySelectorAll('a, button, .jeep-back');
+        hoverElements.forEach(function(el) {
+          el.addEventListener('mouseenter', function() {
+            cursor.style.width = 'var(--cursor-size-hover)';
+            cursor.style.height = 'var(--cursor-size-hover)';
+            cursor.style.backgroundColor = document.documentElement.classList.contains('modo-oscuro') ? '#ffffff' : '#000000';
+          });
+          el.addEventListener('mouseleave', function() {
+            cursor.style.width = 'var(--cursor-size)';
+            cursor.style.height = 'var(--cursor-size)';
+            cursor.style.backgroundColor = 'var(--cursor-color)';
+          });
+        });
+        
+        document.addEventListener('mousedown', function() { 
+          cursor.style.transform = 'translate(-50%, -50%) scale(0.7)'; 
+        });
+        document.addEventListener('mouseup', function() { 
+          cursor.style.transform = 'translate(-50%, -50%) scale(1)'; 
+        });
+        document.addEventListener('mouseleave', function() { 
+          cursor.style.opacity = '0'; 
+        });
+        document.addEventListener('mouseenter', function() { 
+          cursor.style.opacity = 'var(--cursor-opacity)'; 
+        });
+      }
+      
+      // 2. TEMA CLARO/OSCURO
+      const themeBtn = document.getElementById('theme-switcher-btn');
+      if (themeBtn) {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') document.documentElement.classList.add('modo-oscuro');
+        
+        themeBtn.addEventListener('click', function() {
+          const isDarkMode = document.documentElement.classList.toggle('modo-oscuro');
+          localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+          if (cursor) cursor.style.backgroundColor = 'var(--cursor-color)';
+        });
+      }
+
+      // 3. LIGHTBOX
+      const lightbox = document.getElementById('lightbox-overlay');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const closeBtn = document.getElementById('lightbox-close');
+      const images = document.querySelectorAll('.project-image, .project-image-vertical');
+
+      images.forEach(img => {
+        img.addEventListener('click', function(e) {
+          e.stopPropagation();
+          lightboxImg.src = this.src;
+          lightbox.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'hidden'; // Mantenemos hidden
+      }
+
+      closeBtn.addEventListener('click', closeLightbox);
+
+      lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox) {
+          closeLightbox();
+        }
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+          closeLightbox();
+        }
+      });
+      
+    });
+
+    // SONIDOS
+    let sonidosActivados = true;
+    let ultimoSonido = 0;
+    
+    const sonidoClick = new Audio('sounds/sound1.wav');
+    const sonidoBoton = new Audio('sounds/sound1.wav');
+    
+    sonidoClick.volume = 0.6;
+    sonidoBoton.volume = 0.6;
+
+    function reproducirSonido(audio, delay = 100) {
+      if (!sonidosActivados) return;
+      const ahora = Date.now();
+      if (ahora - ultimoSonido < delay) return;
+      ultimoSonido = ahora;
+      try { 
+        audio.currentTime = 0; 
+        audio.play(); 
+      } catch (error) { 
+        console.log('Error al reproducir sonido:', error); 
+      }
+    }
+
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('#custom-cursor')) return;
+      const esBoton = e.target.closest('button, a, .jeep-back');
+      if (esBoton) {
+        reproducirSonido(sonidoBoton, 150);
+      } else {
+        if (e.target.closest('#lightbox-overlay')) return; 
+        reproducirSonido(sonidoClick, 100);
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>texto.doc | RICARDO DE MARCOS</title>
+  <title>ABOUT | RICARDO DE MARCOS</title>
   <link rel="stylesheet" href="style-doc.css">
   <style>
     
@@ -11,7 +11,7 @@
         --border-color: #e5e5e5;
         --text-color: #000000;
         --text-light: #888;
-        --background-color: hsl(0, 0%, 96%);
+        --background-color: #ffffff;
         --hover-bg-color: #e9e9e9;
         /* VARIABLES DEL CURSOR */
         --cursor-size: 4px;
@@ -122,11 +122,11 @@
 /* --- BOTÓN VOLVER "I NEED A JEEP" --- */
         .jeep-back {
             position: fixed;
-            top: 30px;
-            left: 30px;
+            top: 20px;
+            left: 20px;
             color: var(--text-color);
             text-decoration: none;
-            font-size: 0.9em;
+            font-size: 1.0em;
             z-index: 1000;
             padding: 0;
             margin: 0;
@@ -297,12 +297,17 @@
   <div class="single-landing" id="landing-section">
     <div class="header-section">
       <div class="header-left">
-        <a href="index.html" class="jeep-back">I NEED A JEEP</a>
+        <a href="index.html" class="jeep-back">RICARDO DE MARCOS</a>
       </div>
       <div class="header-right">
         <div class="header-right-col"> 
-          <div>Llegas tarde. Subes por una rampa mientras cantas esa canción. Hay mierdas de perro guardadas en bolsas negras atadas con un lazo. El acero suena bajo tus pies. Una barandilla de ballet te separa del abismo. Un Hogar para la Altura de tus Sueños. Vas a salir volando. Te atas los cordones. Las luces se reflejan tan fuerte en el metal que ya no se ve ningún color. Estabas cantando pero ya no. Te rascas la cara llena de aceite. No ves bien qué hay ahí. Te secas una lágrima de líquido refrigerante. Hay una zapatilla en el centro del puente. Sí, es posible que no sea tu zapatilla la que está tirada ahí, en el centro del puente, de lado. Puede que sea de otra persona. Un señor sigue a un perro muy limpio con las manos en los bolsillos. No te ven. Una gota de sudor cuelga del puente de la M-30. Pero te están mirando. Una pelota ha llegado hasta ti. Ahora que estás aquí y te da el aire en la frente. Te miro con las manos en los bolsillos. Ya no deambulas, porque solo pueden deambular los que roban tiempo para ello. Preciosos minutos que se las ingenian para arañar de sus horarios. </div>
-          <div>Texto por María Pagola</div>
+          <div>Madrid (1999), desarrollo mi práctica pictórica a través de la observación del entorno, y los elementos potenciadores de la imagen. Entiendo la pintura como un ciclo no acabado, en el que se ve fuertemente influenciada del espacio que uno habita.
+
+Trabajo a través de imagenes existentes que me atraen previamente al propio proceso pictórico. A partir de ellas desarrollo nuevos escenarios y narrativas, que van generando una historia común junto al resto de piezas. Mi práctica convierte el graffiti en un laboratorio conceptual donde la pintura, los limites del arte dialogan para cuestionar la ciudad y la naturaleza efímera de la creación contemporánea.
+
+Mi trabajo tiene un planteamiento abierto en el que exploro la relación entre la pintura, el espacio urbano y la libertad creativa. Hasta ahora mis intereses han estado centrados en la pintura. Estos han dado la necesidad natural de explorar otros procesos nuevos como la fotografía, vídeo y la pintura expandida.
+
+ </div>
         </div>
         <div class="header-right-col">
           <div> 
@@ -422,6 +427,97 @@
       
       console.log('🚀 texto.html completamente cargado');
     });
+
+    // SONIDO AL HACER CLIC
+
+// Variables de control
+let sonidosActivados = true;
+let ultimoSonido = 0;
+
+// Precargar los 3 sonidos
+const sonidoClick = new Audio('sounds/sound1.wav');  // Sonido para clic general
+const sonidoBoton = new Audio('sounds/sound1.wav');  // Sonido para botones (cambia la ruta)
+const sonidoScroll = new Audio('sounds/sound1.wav'); // Sonido para scroll (cambia la ruta)
+
+// Ajustar volúmenes (0.0 - 1.0)
+sonidoClick.volume = 0.6;
+sonidoBoton.volume = 0.6;    // Más bajo para botones
+sonidoScroll.volume = 0.6;   // Más bajo para scroll (sutil)
+
+// Función genérica para reproducir sonidos
+function reproducirSonido(audio, delay = 100) {
+  if (!sonidosActivados) return;
+  
+  const ahora = Date.now();
+  if (ahora - ultimoSonido < delay) return;
+  ultimoSonido = ahora;
+  
+  try {
+    audio.currentTime = 0;
+    audio.play();
+  } catch (error) {
+    console.log('Error al reproducir sonido:', error);
+  }
+}
+
+
+// EVENTO 1: Sonido al hacer clic en cualquier parte
+
+document.addEventListener('click', function(e) {
+  // Excluir elementos especiales
+  if (e.target.closest('#custom-cursor')) return;
+  if (e.target.closest('#toggle-sound-btn')) return;
+  
+  // Verificar si es un botón/enlace (para sonido especial)
+  const esBoton = e.target.closest('button, a, .jeep-back, .theme-wrapper button, .footer-left-fixed a');
+  
+  if (esBoton) {
+    // Sonido especial para botones
+    reproducirSonido(sonidoBoton, 150);
+  } else {
+    // Sonido normal para clics generales
+    reproducirSonido(sonidoClick, 100);
+  }
+});
+
+
+// EVENTO 2: Sonido al hacer scroll en imágenes
+
+
+let ultimoScroll = 0;
+const imagenes = document.querySelectorAll('.proyecto-imagen');
+
+// Función para detectar si una imagen está visible
+function estaVisible(elemento) {
+  const rect = elemento.getBoundingClientRect();
+  return rect.top < window.innerHeight && rect.bottom > 0;
+}
+
+// Detectar scroll en las imágenes
+window.addEventListener('scroll', function() {
+  const scrollActual = window.scrollY;
+  
+  // Solo si el scroll cambió significativamente
+  if (Math.abs(scrollActual - ultimoScroll) > 50) {
+    
+    // Verificar si alguna imagen está visible
+    let imagenVisible = false;
+    imagenes.forEach(imagen => {
+      if (estaVisible(imagen)) {
+        imagenVisible = true;
+      }
+    });
+    
+    // Si hay una imagen visible, reproducir sonido de scroll
+    if (imagenVisible) {
+      reproducirSonido(sonidoScroll, 200); // Delay más largo para scroll
+    }
+    
+    ultimoScroll = scrollActual;
+  }
+});
+
+
   </script>
 
 </body>

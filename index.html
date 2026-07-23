@@ -2,970 +2,583 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>I NEED A JEEP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ricardo de Marcos</title>
   <style>
-    /* ==========================================================================
-       VARIABLES GLOBALES
-       ========================================================================== */
-    
+    /* ============================================================
+       CSS
+       ============================================================ */
     :root {
-      /* Colores modo claro */
-      --color-fondo: #a1a1a1;
-      --color-texto: beige;
-      --color-texto-hover: rgba(245, 245, 220, 0.7);
-      --color-imagen-fondo: transparent;
-      
-      /* Tipografía */
-      --fuente-principal: 'REX', sans-serif;
-      --tamano-texto: 10.25px;
-      --linea-altura: 12.30px;
-      --peso-texto: 300;
-      
-      /* Espaciados y dimensiones */
-      --espacio-imagenes: 100px;
-      --alto-contenedor: 55vh;
-      --margen-izquierdo: 80px;
-      --margen-derecho: 80px;
-      --posicion-texto-vertical: 440px;
-      --posicion-texto-desktop: calc(50vh + (var(--alto-contenedor) / 2) + 20px);
-      
-      /* Responsive */
-      --tablet-breakpoint: 768px;
-      --mobile-breakpoint: 480px;
-      --espacio-responsive: 40px;
-      --ancho-responsive: 85%;
-      
-      /* Cursor */
+      --border-color: #e5e5e5;
+      --text-color: #000000;
+      --text-light: #888;
+      --background-color: #ffffff;
+      --hover-bg-color: #e9e9e9;
       --cursor-size: 4px;
       --cursor-size-hover: 18px;
+      --cursor-size-image: 10px;
       --cursor-opacity: 0.8;
+      --cursor-color: #000000;
+      --gap-entre-proyectos: 30vh;      /* Gap para horizontales */
+      --gap-vertical: 70vh;            /* Gap para vertical (más grande) */
     }
-    
+
     :root.modo-oscuro {
-      --color-fondo: #1a1a1a;
-      --color-texto: #e0e0e0;
-      --color-texto-hover: rgba(224, 224, 224, 0.7);
+      --border-color: #3a3a3a;
+      --text-color: #e0e0e0;
+      --text-light: #777;
+      --background-color: #0e0e0e;
+      --hover-bg-color: #2a2a2a;
+      --cursor-color: #e0e0e0;
     }
-    
-    /* ==========================================================================
-       FUENTES
-       ========================================================================== */
-    
+
     @font-face {
-      font-family: 'ABC CameraPlain';
-      src: url('./fonts/FOT-ABCCameraPlain-Regular-Trial') format('opentype');
+      font-family: 'REX';
+      src: url('./fonts/FOT-NewRodinProM.otf') format('opentype');
       font-weight: normal;
       font-style: normal;
     }
-    
-    /* ==========================================================================
-       RESET Y ELIMINACIÓN DEL CURSOR
-       ========================================================================== */
-    
+
+    /* Cursor personalizado */
     * {
+      cursor: none !important;
       box-sizing: border-box;
+    }
+    html, body, body *, body *:hover, body *:active, body *:focus,
+    body *::before, body *::after {
       cursor: none !important;
     }
-    
-    html, body, 
-    body *, 
-    body *:hover, 
-    body *:active, 
-    body *:focus,
-    body *::before,
-    body *::after {
-      cursor: none !important;
-    }
-    
-    /* ==========================================================================
-       CURSOR PERSONALIZADO
-       ========================================================================== */
-    
+
     #custom-cursor {
       position: fixed;
       width: var(--cursor-size);
       height: var(--cursor-size);
-      background-color: var(--color-texto);
+      background-color: var(--cursor-color);
       border-radius: 50%;
       pointer-events: none;
       z-index: 999999;
       transform: translate(-50%, -50%);
-      transition: 
-        width 0.2s ease,
-        height 0.2s ease,
-        background-color 0.3s ease,
-        opacity 0.2s ease;
-      mix-blend-mode: difference;
+      transition: width 0.2s ease, height 0.2s ease, background-color 0.3s ease, opacity 0.2s ease;
       opacity: var(--cursor-opacity);
       left: -100px;
       top: -100px;
     }
-    
-    :root.modo-oscuro #custom-cursor {
-      background-color: #e0e0e0;
-      mix-blend-mode: normal;
-    }
-    
-    /* ==========================================================================
-       ESTILOS BASE
-       ========================================================================== */
-    
-    html {
-      height: 100%;
-    }
-    
-    body {
-      font-family: var(--fuente-principal);
-      margin: 0;
-      background-color: var(--color-fondo);
-      color: var(--color-texto);
-      font-size: var(--tamano-texto);
-      line-height: var(--linea-altura);
-      overflow-x: hidden;
-      height: 100vh;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-    
-    /* ==========================================================================
-       LAYOUT PRINCIPAL - ESCRITORIO
-       ========================================================================== */
-    
-    .landing {
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-template-rows: 1fr;
-      height: 100vh;
-      width: 100vw;
-    }
-    
-    /* ==========================================================================
-       GALERÍAS DE IMÁGENES - ESCRITORIO
-       ========================================================================== */
-    
-    .image-pair {
-      display: grid;
-      grid-template-columns: auto auto;
-      width: auto;
-      height: 100vh;
-      gap: var(--espacio-imagenes);
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .image-block {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      height: 100vh;
-    }
-    
-    .image-block.left-block .image-container {
-      max-width: 600px;
-    }
-    
-    .image-block.right-block .image-container {
-      max-width: 400px;
-    }
-    
-    .image-container {
-      position: relative;
-      overflow: hidden;
-      background-color: var(--color-imagen-fondo);
-      margin: 0;
-      cursor: pointer !important;
-    }
-    
-    .image-block.left-block .image-container {
-      width: 100%;
-      max-width: 600px;
-      height: var(--alto-contenedor);
-      aspect-ratio: 16/9;
-    }
-    
-    .image-block.right-block .image-container {
-      width: 100%;
-      max-width: 400px;
-      height: var(--alto-contenedor);
-      aspect-ratio: 4/5;
-    }
-    
-    .image-container img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    
-    .image-container img.active {
-      opacity: 1;
-    }
-    
-    /* ==========================================================================
-       TEXTOS - ESCRITORIO
-       ========================================================================== */
-    
-    .text-left,
-    .text-right {
-      position: absolute;
-      top: var(--posicion-texto-vertical);
-      display: flex;
-      align-items: flex-start;
-      font-family: var(--fuente-principal);
-      font-weight: var(--peso-texto);
-      font-size: var(--tamano-texto);
-      line-height: var(--linea-altura);
-      color: var(--color-texto);
-      transition: color 0.3s ease;
-    }
-    
-    .text-left {
-      left: var(--margen-izquierdo);
-      text-align: left;
-    }
-    
-    .text-right {
-      right: var(--margen-derecho); 
-      text-align: right;
-      display: block;
-    }
-    
-    @media (min-width: 769px) {
-      .text-left {
-        left: 30px;
-        top: var(--posicion-texto-desktop);
-        text-align: left;
-      }
-      
-      .text-right {
-        right: 30px;
-        top: var(--posicion-texto-desktop);
-        text-align: right;
-      }
-    }
-    
-    .text-right a {
-      display: inline-block;
-      color: inherit;
-      text-decoration: none;
-      font-family: inherit;
-      font-weight: inherit;
-      font-size: inherit;
-      line-height: inherit;
-      text-align: right;
-      width: 100%;
-      transition: color 0.2s ease, opacity 0.2s ease;
-    }
-    
-    .text-right a:hover {
-      color: var(--color-texto-hover);
-      opacity: 0.8;
-    }
-    
-    /* ==========================================================================
-       BOTONES SUPERIORES
-       ========================================================================== */
-    
-    .jeep-back {
+
+    /* HEADER SUPERIOR IZQUIERDO: "RICARDO DE MARCOS"*/
+    .header-left {
       position: fixed;
-      top: 30px;
-      left: 30px;
-      color: var(--color-texto);
-      text-decoration: none;
-      font-family: var(--fuente-principal);
-      font-size: var(--tamano-texto);
-      line-height: var(--linea-altura);
-      font-weight: var(--peso-texto);
+      top: 20px;
+      left: 20px;
       z-index: 1000;
+    }
+
+    .jeep-back {
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 0.8em;
       padding: 0;
       margin: 0;
       background: none;
       border: none;
       letter-spacing: 0.5px;
       transition: all 0.3s ease;
-      opacity: 0.9;
-      cursor: pointer !important;
+      cursor: none !important;
     }
-    
+
     .jeep-back:hover {
       opacity: 0.7;
       transform: translateX(-2px);
     }
-    
+
+    .jeep-back:active {
+      transform: translateX(0);
+    }
+
+    /* HEADER SUPERIOR DERECHO: BOTÓN DE TEMA "/B" */
+    .theme-wrapper {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+    }
     #theme-switcher-btn {
       background: none;
       border: none;
       padding: 0;
       margin: 0;
       font: inherit;
-      color: var(--color-texto);
-      font-size: var(--tamano-texto);
-      width: auto;
-      height: auto;
+      color: inherit;
+      font-size: 1em;
+      width: 30px;
+      height: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.3s ease;
-      opacity: 0.7;
-      cursor: button !important;
-      position: fixed;
-      top: 40px;
-      right: 30px; 
-      z-index: 1000;
+      cursor: none !important;
     }
-    
     #theme-switcher-btn:hover {
-      opacity: 1;
+      opacity: 0.6;
     }
-    
     #theme-switcher-btn .icon-light,
     #theme-switcher-btn .icon-dark {
       display: none;
-      font-family: var(--fuente-principal);
-      font-weight: var(--peso-texto);
-      font-size: var(--tamano-texto);
-      line-height: var(--linea-altura);
     }
-    
     :root:not(.modo-oscuro) #theme-switcher-btn .icon-light {
       display: block;
     }
-    
     :root.modo-oscuro #theme-switcher-btn .icon-dark {
       display: block;
     }
-    
-    /* ==========================================================================
-       RESPONSIVE DESIGN - MÓVIL SIN SCROLL
-       ========================================================================== */
-    
-    /* TABLET (769px - 1024px) */
-    @media (max-width: 1024px) {
-      :root {
-        --espacio-imagenes: 60px;
-        --margen-izquierdo: 50px;
-        --margen-derecho: 50px;
-      }
-      
-      .image-block.left-block .image-container {
-        max-width: 500px;
-      }
-      
-      .image-block.right-block .image-container {
-        max-width: 500px;
-      }
-      
-      #theme-switcher-btn {
-        right: 50px;
-        top: 40px;
-      }
-      
-      .jeep-back {
-        left: 50px;
-        top: 40px;
-      }
-      
-      @media (min-width: 769px) {
-        .text-left {
-          left: 50px;
-          top: var(--posicion-texto-desktop);
-        }
-        
-        .text-right {
-          right: 50px;
-          top: var(--posicion-texto-desktop);
-        }
-      }
+
+    /* FOOTER INFERIOR IZQUIERDO: "ABOUT" */
+    .footer-left-fixed {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      font-size: 0.8em;
     }
-    
-    /* MÓVIL Y TABLET VERTICAL (768px o menos) - CORREGIDO */
-    @media (max-width: 768px) {
-      :root {
-        --espacio-imagenes: 15px;
-        --margen-izquierdo: 20px;
-        --margen-derecho: 20px;
-        --ancho-responsive: 85%;
-        --cursor-size: 10px;
-        --cursor-size-hover: 12px;
-      }
-      
-      /* ELIMINAR SCROLL COMPLETAMENTE */
-      html, body {
-        height: 100vh;
-        width: 100vw;
-        overflow: hidden !important;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-      }
-      
-      /* CONTENEDOR PRINCIPAL - FLOW VERTICAL */
-      .landing {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        width: 100vw;
-        overflow: hidden;
-        position: fixed;
-        top: 0;
-        left: 0;
-      }
-      
-      /* CONTENEDOR DE CONTENIDO */
-      .content-wrapper {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        width: 100vw;
-        padding: 60px 0 15px 0;
-        box-sizing: border-box;
-      }
-      
-      /* SECCIÓN DE GALERÍAS */
-      .gallery-section {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        gap: 8px;
-        justify-content: center;
-        align-items: center;
-        flex: 3; /* 3 partes del espacio */
-        min-height: 0;
-      }
-      
-      /* PRIMERA GALERÍA (IZQUIERDA) */
-      .image-block.left-block.mobile-block {
-        width: var(--ancho-responsive);
-        max-width: 400px;
-        margin: 0 auto 5px auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      
-      .image-block.left-block.mobile-block .image-container {
-        width: 100%;
-        height: auto;
-        max-height: 30vh;
-        aspect-ratio: 16/9;
-      }
-      
-      /* SEGUNDA GALERÍA (DERECHA) - CORREGIDA */
-      .image-block.right-block.mobile-block {
-        width: var(--ancho-responsive);
-        max-width: 400px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      
-      .image-block.right-block.mobile-block .image-container {
-        width: 100%;
-        height: auto;
-        max-height: 35vh; /* Altura controlada */
-        aspect-ratio: 16/9; /* Por defecto 16:9 */
-      }
-      
-      /* SECCIÓN DE TEXTOS */
-      .text-section {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        padding: 5px 20px 15px 20px;
-        gap: 8px;
-        justify-content: flex-end;
-        align-items: flex-start;
-        flex: 1; /* 1 parte del espacio */
-        min-height: 0;
-        box-sizing: border-box;
-      }
-      
-      /* TEXTOS EN MÓVIL */
-      .text-left.mobile-text,
-      .text-right.mobile-text {
-        position: static;
-        text-align: left;
-        margin: 0;
-        padding: 0;
-        font-size: 11px;
-        line-height: 1.3;
-        width: 100%;
-        height: auto;
-      }
-      
-      .text-left.mobile-text {
-        order: 1;
-      }
-      
-      .text-right.mobile-text {
-        order: 2;
-        text-align: left;
-        margin-top: 5px;
-      }
-      
-      .text-right.mobile-text a {
-        text-align: left;
-      }
-      
-      /* BOTONES SUPERIORES */
-      .jeep-back {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        font-size: 11px;
-        z-index: 1001;
-      }
-      
-      #theme-switcher-btn {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        font-size: 11px;
-        z-index: 1001;
-      }
-      
-      /* OCULTAR ELEMENTOS DE ESCRITORIO */
-      .image-pair,
-      .text-left:not(.mobile-text),
-      .text-right:not(.mobile-text) {
-        display: none !important;
-      }
-      
-      /* MOSTRAR ELEMENTOS DE MÓVIL */
-      .content-wrapper,
-      .gallery-section,
-      .text-section,
-      .image-block.mobile-block,
-      .text-left.mobile-text,
-      .text-right.mobile-text {
-        display: flex;
-      }
+
+    .footer-left-fixed a {
+      color: var(--text-color);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      cursor: none !important;
     }
-    
-    /* MÓVIL PEQUEÑO (menos de 450px) - CAMBIA A 4:5 */
-    @media (max-width: 449px) {
-      .image-block.right-block.mobile-block .image-container {
-        aspect-ratio: 4/5;
-        max-height: 38vh; /* Un poco más alto para formato vertical */
-      }
-      
-      .gallery-section {
-        flex: 3.5; /* Un poco más de espacio para la imagen vertical */
-      }
-      
-      .text-section {
-        flex: 0.8; /* Un poco menos de espacio para textos */
-      }
+
+    .footer-left-fixed a:hover {
+      opacity: 0.7;
+      transform: translateX(-2px);
     }
-    
-    /* MÓVIL PEQUEÑO (480px o menos) - AJUSTES */
-    @media (max-width: 480px) {
-      :root {
-        --ancho-responsive: 90%;
-        --cursor-size: 8px;
-        --cursor-size-hover: 10px;
-      }
-      
-      .content-wrapper {
-        padding: 55px 0 10px 0;
-      }
-      
-      .image-block.left-block.mobile-block,
-      .image-block.right-block.mobile-block {
-        max-width: 350px;
-      }
-      
-      .image-block.left-block.mobile-block .image-container {
-        max-height: 28vh;
-      }
-      
-      .image-block.right-block.mobile-block .image-container {
-        max-height: 33vh;
-      }
-      
-      .text-left.mobile-text,
-      .text-right.mobile-text {
-        font-size: 10px;
-      }
-      
-      .jeep-back {
-        top: 15px;
-        left: 15px;
-        font-size: 10px;
-      }
-      
-      #theme-switcher-btn {
-        top: 15px;
-        right: 15px;
-        font-size: 10px;
-      }
+
+    .footer-left-fixed .footer-separator {
+      color: var(--text-light);
+      opacity: 0.3;
     }
-    
-    /* MÓVIL MUY PEQUEÑO (320px y menos) - 4:5 OBLIGATORIO */
-    @media (max-width: 320px) {
-      :root {
-        --ancho-responsive: 92%;
-      }
-      
-      .content-wrapper {
-        padding: 50px 0 5px 0;
-      }
-      
-      .image-block.left-block.mobile-block,
-      .image-block.right-block.mobile-block {
-        max-width: 280px;
-      }
-      
-      .image-block.left-block.mobile-block .image-container {
-        max-height: 25vh;
-        aspect-ratio: 16/9;
-      }
-      
-      .image-block.right-block.mobile-block .image-container {
-        aspect-ratio: 4/5 !important;
-        max-height: 35vh;
-      }
-      
-      .text-left.mobile-text,
-      .text-right.mobile-text {
-        font-size: 9px;
-        line-height: 1.2;
-      }
-      
-      .jeep-back {
-        top: 12px;
-        left: 12px;
-        font-size: 9px;
-      }
-      
-      #theme-switcher-btn {
-        top: 12px;
-        right: 12px;
-        font-size: 9px;
-      }
+
+    .footer-left-fixed .footer-copyright {
+      color: var(--text-light);
+      font-size: 0.75em;
+      opacity: 0.6;
     }
+
+    /*FOOTER INFERIOR DERECHO: "2026" */
+    .footer-right-fixed {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      font-size: 0.9em;
+      color: var(--text-light);
+      letter-spacing: 0.5px;
+      opacity: 0.6;
+      transition: opacity 0.3s ease;
+    }
+
+    .footer-right-fixed:hover {
+      opacity: 1;
+    }
+
+    /* ============================================================
+       ESTRUCTURA PRINCIPAL - CON GAP ENTRE PROYECTOS
+       ============================================================ */
     
-    /* ==========================================================================
-       UTILIDADES
-       ========================================================================== */
+    .main-wrapper {
+      width: 100%;
+      height: 100vh;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      position: relative;
+      scroll-behavior: smooth;
+    }
+
+    /* Página horizontal (estándar) */
+    .page {
+      width: 100%;
+      height: calc(100vh + var(--gap-entre-proyectos));
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Página vertical (más gap) */
+    .page-vertical {
+      height: calc(100vh + var(--gap-vertical)); /* ← Gap más grande */
+    }
+
+    /* ============================================================
+       IMÁGENES HORIZONTALES (3:2)
+       ============================================================ */
     
-    ::-webkit-scrollbar {
+    .project-link {
+      display: block;
+      width: 100%;
+      max-width: 800px;
+      text-decoration: none;
+      color: inherit;
+      position: sticky;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: none !important;
+    }
+
+    .fixed-image {
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      background-color: var(--hover-bg-color);
+      border-radius: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      transition: background-color 0.3s ease;
+      border: 0px solid var(--border-color);
+      overflow: hidden;
+    }
+
+    .fixed-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0px;
+      display: block;
+    }
+
+    /* ============================================================
+       IMÁGENES VERTICALES (2:3)
+       ============================================================ */
+    
+    .project-link-vertical {
+      display: block;
+      width: 100%;
+      max-width: 500px; /* Más estrecho para formato vertical */
+      text-decoration: none;
+      color: inherit;
+      position: sticky;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: none !important;
+    }
+
+    .fixed-image-vertical {
+      width: 100%;
+      aspect-ratio: 4 / 5; /* ← VERTICAL 2:3 */
+      background-color: var(--hover-bg-color);
+      border-radius: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      transition: background-color 0.3s ease;
+      border: 0px solid var(--border-color);
+      overflow: hidden;
+    }
+
+    .fixed-image-vertical img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0px;
+      display: block;
+    }
+
+    /* Ocultar scrollbar */
+    .main-wrapper::-webkit-scrollbar {
       display: none;
     }
-    
-    html, body {
-      max-width: 100vw;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
+    .main-wrapper {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
-    
-    @supports (-webkit-touch-callout: none) {
-      body {
-        touch-action: pan-x pan-y;
+
+    /* ============================================================
+       CSS RESPONSIVE
+       ============================================================ */
+    @media (max-width: 700px) {
+      :root {
+        --gap-entre-proyectos: 20vh;
+        --gap-vertical: 40vh; /* ← Gap vertical más pequeño en móvil */
+        --cursor-size-image: 8px;
       }
+      .header-left {
+        top: 15px;
+        left: 15px;
+      }
+      .theme-wrapper {
+        top: 15px;
+        right: 15px;
+      }
+      .footer-left-fixed {
+        bottom: 15px;
+        left: 15px;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        font-size: 0.8em;
+      }
+      .footer-right-fixed {
+        bottom: 15px;
+        right: 15px;
+        font-size: 0.8em;
+      }
+      .project-link {
+        width: 90%;
+        max-width: 600px;
+      }
+      .project-link-vertical {
+        width: 70%;
+        max-width: 400px;
+      }
+    }
+
+    @media (max-width: 450px) {
+      :root {
+        --gap-entre-proyectos: 15vh;
+        --gap-vertical: 30vh; /* ← Gap vertical aún más pequeño */
+        --cursor-size-image: 6px;
+      }
+      .project-link {
+        width: 95%;
+        max-width: 400px;
+      }
+      .project-link-vertical {
+        width: 80%;
+        max-width: 300px;
+      }
+    }
+
+    /* Reset body */
+    body {
+      font-family: 'REX', sans-serif;
+      margin: 0;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      font-size: 0.9em;
+      overflow: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      height: 100vh;
     }
   </style>
 </head>
-
 <body>
-  <!-- Cursor personalizado -->
+
+  <!-- CURSOR PERSONALIZADO -->
   <div id="custom-cursor"></div>
 
-  <!-- Botón "I NEED A JEEP" -->
-  <a href="index.html" class="jeep-back">I NEED A JEEP</a>
-
-  <!-- Botón de cambio de tema -->
-  <button id="theme-switcher-btn">
-    <span class="icon-light">/B</span>
-    <span class="icon-dark">/W</span>
-  </button>
-
-  <div class="landing">
-    <!-- ESCRITORIO: layout original -->
-    <div class="image-pair">
-      <div class="image-block left-block">
-        <div class="image-container" id="galeria-izquierda">
-          <img src="images/img01.webp" class="active" alt="Image 1">
-          <img src="images/img02.webp" alt="Image 2">
-          <img src="images/img03.webp" alt="Image 3">
-          <img src="images/img04.webp" alt="Image 4">
-          <img src="images/img05.webp" alt="Image 5">
-          <img src="images/img06.webp" alt="Image 6">
-          <img src="images/img10.webp" alt="Image 10">
-          <img src="images/img11.webp" alt="Image 11">
-          <img src="images/img12.webp" alt="Image 12">
-        </div>
-      </div>
-      
-      <div class="image-block right-block">
-        <div class="image-container" id="galeria-derecha">
-          <img src="images/img07.webp" class="active" alt="Image 7">
-          <img src="images/img08.webp" alt="Image 8">
-          <img src="images/img09.webp" alt="Imagen 9">
-          <img src="images/img15.webp" alt="Imagen 15">
-          <img src="images/img13.webp" alt="Image 13">
-          <img src="images/img14.webp" alt="Image 14">
-        </div>
-      </div>
-    </div>
-
-    <!-- Textos escritorio -->
-    <div class="text-left">
-      <br>
-      Enero 2025, Chaiz Studio <br>
-      Curado por Arturo F. Peral
-    </div>
-
-    <div class="text-right">
-      <a href="texto.html">texto.doc</a><br>
-    </div>
-
-    <!-- MÓVIL: nuevo layout vertical -->
-    <div class="content-wrapper">
-      <!-- SECCIÓN 1: Galerías -->
-      <div class="gallery-section">
-        <!-- Galería izquierda -->
-        <div class="image-block left-block mobile-block">
-          <div class="image-container" id="galeria-izquierda-mobile">
-            <img src="images/img01.webp" class="active" alt="Image 1">
-            <img src="images/img02.webp" alt="Image 2">
-            <img src="images/img03.webp" alt="Image 3">
-            <img src="images/img04.webp" alt="Image 4">
-            <img src="images/img05.webp" alt="Image 5">
-            <img src="images/img06.webp" alt="Image 6">
-            <img src="images/img10.webp" alt="Image 10">
-            <img src="images/img11.webp" alt="Image 11">
-            <img src="images/img12.webp" alt="Image 12">
-          </div>
-        </div>
-        
-        <!-- Galería derecha -->
-        <div class="image-block right-block mobile-block">
-          <div class="image-container" id="galeria-derecha-mobile">
-            <img src="images/img07.webp" class="active" alt="Image 7">
-            <img src="images/img08.webp" alt="Image 8">
-            <img src="images/img09.webp" alt="Imagen 9">
-            <img src="images/img15.webp" alt="Imagen 15">
-            <img src="images/img13.webp" alt="Image 13">
-            <img src="images/img14.webp" alt="Image 14">
-          </div>
-        </div>
-      </div>
-      
-      <!-- SECCIÓN 2: Textos -->
-      <div class="text-section">
-        <!-- Texto izquierdo -->
-        <div class="text-left mobile-text">
-          <br>
-          Enero 2025, Chaiz Studio <br>
-          Curado por Arturo F. Peral
-        </div>
-        
-        <!-- Texto derecho -->
-        <div class="text-right mobile-text">
-          <a href="texto.html">texto.doc</a><br>
-        </div>
-      </div>
-    </div>
+  <!-- HEADER SUPERIOR IZQUIERDO -->
+  <div class="header-left">
+    <a href="index.html" class="jeep-back">RICARDO DE MARCOS</a>
   </div>
 
+  <!-- HEADER SUPERIOR DERECHO -->
+  <div class="theme-wrapper">
+    <button id="theme-switcher-btn">
+      <span class="icon-light">/B</span>
+      <span class="icon-dark">/W</span>
+    </button>
+  </div>
+
+  <!-- FOOTER INFERIOR IZQUIERDO -->
+  <div class="footer-left-fixed">
+    <a href="texto.html">ABOUT</a>
+  </div>
+
+  <!-- FOOTER INFERIOR DERECHO -->
+  <div class="footer-right-fixed">© 2026 All rights reserved.</div>
+
+  <!-- CONTENEDOR PRINCIPAL DE SCROLL -->
+  <div class="main-wrapper" id="main-wrapper">
+
+    <!-- PÁGINA 1 - HORIZONTAL -->
+    <div class="page">
+      <a href="proyecto1.html" class="project-link">
+        <div class="fixed-image">
+          <img src="IMAGES/01/img11.webp" alt="Proyecto 1">
+        </div>
+      </a>
+    </div>
+
+    <!-- PÁGINA 2 - HORIZONTAL -->
+    <div class="page">
+      <a href="proyecto2.html" class="project-link">
+        <div class="fixed-image">
+          <img src="IMAGES/02/img01.webp" alt="Proyecto 2">
+        </div>
+      </a>
+    </div>
+
+ <!-- PÁGINA 4 - VERTICAL CON MÁS GAP -->
+    <div class="page page-vertical">
+      <a href="proyecto4.html" class="project-link-vertical">
+        <div class="fixed-image-vertical">
+          <img src="IMAGES/04/img02.webp" alt="Proyecto 4">
+        </div>
+      </a>
+      </div>
+
+
+    <!-- PÁGINA 3 - HORIZONTAL -->
+    <div class="page">
+      <a href="proyecto3.html" class="project-link">
+        <div class="fixed-image">
+          <img src="IMAGES/03/img01.webp" alt="Proyecto 3">
+        </div>
+      </a>
+    </div>
+
+   
+
+      <!-- PÁGINA 4 - VERTICAL CON MÁS GAP -->
+    <div class="page page-vertical">
+      <a href="proyecto5.html" class="project-link-vertical">
+        <div class="fixed-image-vertical">
+          <img src="IMAGES/05/img01.webp" alt="Proyecto 5">
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- JAVASCRIPT -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('🏠 index.html cargado');
-      
+      console.log('📄 Scroll de proyectos cargado');
+
       // 1. CURSOR
       const cursor = document.getElementById('custom-cursor');
-      
       if (cursor) {
-        Object.assign(cursor.style, {
-          position: 'fixed',
-          width: 'var(--cursor-size)',
-          height: 'var(--cursor-size)',
-          backgroundColor: 'var(--color-texto)',
-          borderRadius: '50%',
-          pointerEvents: 'none',
-          zIndex: '999999',
-          transform: 'translate(-50%, -50%)',
-          transition: 'width 0.2s ease, height 0.2s ease, background-color 0.3s ease, opacity 0.2s ease',
-          mixBlendMode: 'difference',
-          opacity: 'var(--cursor-opacity)',
-          left: '-100px',
-          top: '-100px'
-        });
-        
         document.addEventListener('mousemove', function(e) {
           cursor.style.left = e.clientX + 'px';
           cursor.style.top = e.clientY + 'px';
           cursor.style.opacity = 'var(--cursor-opacity)';
         });
-        
-        const hoverElements = document.querySelectorAll('a, button, .jeep-back, #theme-switcher-btn');
+
+        // Elementos normales (botones, links de texto)
+        const hoverElements = document.querySelectorAll('a:not(.project-link):not(.project-link-vertical), button, .jeep-back, .footer-left-fixed a');
+
+        // Elementos de imagen (cursor más pequeño)
+        const imageHoverElements = document.querySelectorAll('.project-link, .project-link-vertical');
+
+        // Event listeners para elementos normales
         hoverElements.forEach(function(el) {
           el.addEventListener('mouseenter', function() {
             cursor.style.width = 'var(--cursor-size-hover)';
             cursor.style.height = 'var(--cursor-size-hover)';
-            cursor.style.backgroundColor = '#000000';
+            cursor.style.backgroundColor = document.documentElement.classList.contains('modo-oscuro') ? '#ffffff' : '#000000';
           });
-          
           el.addEventListener('mouseleave', function() {
             cursor.style.width = 'var(--cursor-size)';
             cursor.style.height = 'var(--cursor-size)';
-            cursor.style.backgroundColor = 'var(--color-texto)';
+            cursor.style.backgroundColor = 'var(--cursor-color)';
           });
         });
-        
+
+        // Event listeners para imágenes (cursor más pequeño)
+        imageHoverElements.forEach(function(el) {
+          el.addEventListener('mouseenter', function() {
+            cursor.style.width = 'var(--cursor-size-image)';
+            cursor.style.height = 'var(--cursor-size-image)';
+            cursor.style.backgroundColor = document.documentElement.classList.contains('modo-oscuro') ? '#ffffff' : '#000000';
+          });
+          el.addEventListener('mouseleave', function() {
+            cursor.style.width = 'var(--cursor-size)';
+            cursor.style.height = 'var(--cursor-size)';
+            cursor.style.backgroundColor = 'var(--cursor-color)';
+          });
+        });
+
         document.addEventListener('mousedown', function() {
           cursor.style.transform = 'translate(-50%, -50%) scale(0.7)';
         });
-        
         document.addEventListener('mouseup', function() {
           cursor.style.transform = 'translate(-50%, -50%) scale(1)';
         });
-        
+
         document.addEventListener('mouseleave', function() {
           cursor.style.opacity = '0';
         });
-        
         document.addEventListener('mouseenter', function() {
           cursor.style.opacity = 'var(--cursor-opacity)';
         });
       }
-      
-      // 2. TEMA
+
+      // 2. TEMA CLARO/OSCURO
       const themeBtn = document.getElementById('theme-switcher-btn');
-      
       if (themeBtn) {
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark') {
           document.documentElement.classList.add('modo-oscuro');
         }
-        
+
         themeBtn.addEventListener('click', function() {
           const isDarkMode = document.documentElement.classList.toggle('modo-oscuro');
           localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-          
           if (cursor) {
-            if (isDarkMode) {
-              cursor.style.backgroundColor = '#e0e0e0';
-              cursor.style.mixBlendMode = 'normal';
-            } else {
-              cursor.style.backgroundColor = 'var(--color-texto)';
-              cursor.style.mixBlendMode = 'difference';
-            }
+            cursor.style.backgroundColor = 'var(--cursor-color)';
           }
         });
       }
-      
-      // 3. GALERÍAS (ESCRITORIO)
-      const galeriaIzquierda = document.getElementById('galeria-izquierda');
-      const imagenesIzquierda = galeriaIzquierda ? galeriaIzquierda.querySelectorAll('img') : [];
-      let indiceIzquierda = 0;
-      
-      if (galeriaIzquierda) {
-        galeriaIzquierda.addEventListener('click', function() {
-          imagenesIzquierda[indiceIzquierda].classList.remove('active');
-          indiceIzquierda = (indiceIzquierda + 1) % imagenesIzquierda.length;
-          imagenesIzquierda[indiceIzquierda].classList.add('active');
-        });
-      }
-      
-      const galeriaDerecha = document.getElementById('galeria-derecha');
-      const imagenesDerecha = galeriaDerecha ? galeriaDerecha.querySelectorAll('img') : [];
-      let indiceDerecha = 0;
-      
-      if (galeriaDerecha) {
-        galeriaDerecha.addEventListener('click', function() {
-          imagenesDerecha[indiceDerecha].classList.remove('active');
-          indiceDerecha = (indiceDerecha + 1) % imagenesDerecha.length;
-          imagenesDerecha[indiceDerecha].classList.add('active');
-        });
-      }
-      
-      // 4. GALERÍAS (MÓVIL)
-      const galeriaIzquierdaMobile = document.getElementById('galeria-izquierda-mobile');
-      const imagenesIzquierdaMobile = galeriaIzquierdaMobile ? galeriaIzquierdaMobile.querySelectorAll('img') : [];
-      let indiceIzquierdaMobile = 0;
-      
-      if (galeriaIzquierdaMobile) {
-        galeriaIzquierdaMobile.addEventListener('click', function() {
-          imagenesIzquierdaMobile[indiceIzquierdaMobile].classList.remove('active');
-          indiceIzquierdaMobile = (indiceIzquierdaMobile + 1) % imagenesIzquierdaMobile.length;
-          imagenesIzquierdaMobile[indiceIzquierdaMobile].classList.add('active');
-        });
-      }
-      
-      const galeriaDerechaMobile = document.getElementById('galeria-derecha-mobile');
-      const imagenesDerechaMobile = galeriaDerechaMobile ? galeriaDerechaMobile.querySelectorAll('img') : [];
-      let indiceDerechaMobile = 0;
-      
-      if (galeriaDerechaMobile) {
-        galeriaDerechaMobile.addEventListener('click', function() {
-          imagenesDerechaMobile[indiceDerechaMobile].classList.remove('active');
-          indiceDerechaMobile = (indiceDerechaMobile + 1) % imagenesDerechaMobile.length;
-          imagenesDerechaMobile[indiceDerechaMobile].classList.add('active');
-        });
-      }
-      
-      // 5. PREVENIR SCROLL
-      function prevenirScroll(event) {
-        if (window.innerWidth <= 768) {
-          event.preventDefault();
-          event.stopPropagation();
-          return false;
+
+      // 3. SONIDOS
+      let sonidosActivados = true;
+      let ultimoSonido = 0;
+
+      const sonidoClick = new Audio('sounds/sound1.wav');
+      const sonidoBoton = new Audio('sounds/sound1.wav');
+      const sonidoScroll = new Audio('sounds/sound1.wav');
+
+      sonidoClick.volume = 0.3;
+      sonidoBoton.volume = 0.3;
+      sonidoScroll.volume = 0.3;
+
+      function reproducirSonido(audio, delay = 100) {
+        if (!sonidosActivados) return;
+        const ahora = Date.now();
+        if (ahora - ultimoSonido < delay) return;
+        ultimoSonido = ahora;
+        try {
+          audio.currentTime = 0;
+          audio.play();
+        } catch (error) {
+          console.log('Error al reproducir sonido:', error);
         }
       }
+
+      document.addEventListener('click', function(e) {
+        if (e.target.closest('#custom-cursor')) return;
+        const esBoton = e.target.closest('button, a, .jeep-back, .theme-wrapper button, .footer-left-fixed a, .project-link, .project-link-vertical');
+        if (esBoton) {
+          reproducirSonido(sonidoBoton, 150);
+        } else {
+          reproducirSonido(sonidoClick, 100);
+        }
+      });
+
+      // 4. SONIDO AL SCROLL - ARREGLADO
+      let ultimoScroll = 0;
+      const mainWrapper = document.getElementById('main-wrapper');
       
-      document.addEventListener('touchmove', prevenirScroll, { passive: false });
-      document.addEventListener('wheel', prevenirScroll, { passive: false });
-      
-      // Forzar tamaño en móvil
-      if (window.innerWidth <= 768) {
-        document.documentElement.style.height = '100vh';
-        document.body.style.height = '100vh';
-        document.body.style.overflow = 'hidden';
-        
-        // Sincronizar galerías
-        if (imagenesIzquierda.length > 0 && imagenesIzquierdaMobile.length > 0) {
-          const activeIndex = Array.from(imagenesIzquierda).findIndex(img => img.classList.contains('active'));
-          if (activeIndex >= 0 && activeIndex < imagenesIzquierdaMobile.length) {
-            imagenesIzquierdaMobile.forEach(img => img.classList.remove('active'));
-            imagenesIzquierdaMobile[activeIndex].classList.add('active');
-            indiceIzquierdaMobile = activeIndex;
+      if (mainWrapper) {
+        mainWrapper.addEventListener('scroll', function() {
+          const scrollActual = mainWrapper.scrollTop;
+          if (Math.abs(scrollActual - ultimoScroll) > 50) {
+            reproducirSonido(sonidoScroll, 200);
+            ultimoScroll = scrollActual;
           }
-        }
-        
-        if (imagenesDerecha.length > 0 && imagenesDerechaMobile.length > 0) {
-          const activeIndex = Array.from(imagenesDerecha).findIndex(img => img.classList.contains('active'));
-          if (activeIndex >= 0 && activeIndex < imagenesDerechaMobile.length) {
-            imagenesDerechaMobile.forEach(img => img.classList.remove('active'));
-            imagenesDerechaMobile[activeIndex].classList.add('active');
-            indiceDerechaMobile = activeIndex;
-          }
-        }
+        });
       }
-    });
-    
-    window.addEventListener('resize', function() {
-      if (window.innerWidth <= 768) {
-        document.documentElement.style.height = '100vh';
-        document.body.style.height = '100vh';
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.documentElement.style.height = '';
-        document.body.style.height = '';
-        document.body.style.overflow = '';
-      }
+
     });
   </script>
+
 </body>
 </html>
