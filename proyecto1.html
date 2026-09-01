@@ -199,7 +199,7 @@
             max-width: 90vw;
             object-fit: cover;
             background-color: var(--hover-bg-color);
-            cursor: pointer; /* Aunque tenemos cursor:none, esto asegura la interacción */
+            cursor: pointer;
         }
 
         .image-caption { display: none; }
@@ -213,10 +213,9 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            z-index: 900; /* Por debajo del cursor y los botones superiores */
-            pointer-events: none; /* Permite hacer clic a través del texto si fuera necesario */
+            z-index: 900;
+            pointer-events: none;
             
-            /* Márgenes que pediste: 20px abajo y 20px a los lados */
             padding: 20px 20px 20px 20px; 
             box-sizing: border-box;
             
@@ -224,12 +223,11 @@
             justify-content: space-between;
             align-items: flex-end;
             
-            /* Fondo sutil para que el texto se lea bien sobre cualquier foto */
             background: linear-gradient(to top, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 100%);
         }
 
         .info-footer > div {
-            pointer-events: auto; /* El texto en sí no es cliqueable, pero si quisieras poner un link, esto lo permite */
+            pointer-events: auto;
             color: #959595eb;
             opacity: 0.85;
             font-size: 0.8em;
@@ -276,8 +274,8 @@
         }
 
         #lightbox-overlay img {
-            max-width: 85vw;    /* CAMBIADO: De 95vw a 85vw (10% más pequeña) */
-            max-height: 85vh;   /* CAMBIADO: De 95vh a 85vh (10% más pequeña) */
+            max-width: 85vw;
+            max-height: 85vh;
             object-fit: contain;
             border-radius: 0px;
             transform: scale(0.95);
@@ -289,7 +287,7 @@
 
 
 /* ==========================================================================
-   RESPONSIVE (MÓVIL)
+   RESPONSIVE (MÓVIL) - CAMBIO APLICADO AQUÍ
    ========================================================================== */
     @media (max-width: 900px) {
         .single-landing { 
@@ -319,7 +317,7 @@
             gap: 30px; 
             align-items: stretch;
             padding-top: 20px;
-            padding-bottom: 100px; /* Más espacio abajo en móvil para no tapar el footer */
+            padding-bottom: 100px;
             padding-left: 0;
             padding-right: 0;
             scroll-padding: 0;
@@ -331,14 +329,17 @@
             display: block;
         }
 
+        /* -------- CAMBIO PRINCIPAL -------- */
+        /* Eliminamos los aspect-ratio fijos para que cada imagen
+           mantenga sus proporciones naturales. Las horizontales se
+           verán horizontales y las verticales se verán verticales. */
         .project-image, .project-image-vertical {
             width: 100%;
             height: auto;
             max-width: 100%;
-            aspect-ratio: 3 / 2;
+            /* Ya no forzamos aspect-ratio */
+            object-fit: contain; /* Para que no se recorte la imagen */
         }
-        
-        .project-image-vertical { aspect-ratio: 3 / 3; }
 
         /* Footer en móvil */
         .info-footer {
@@ -543,7 +544,7 @@
         });
       }
 
-      // 3. LIGHTBOX (NUEVO CÓDIGO AÑADIDO AL FINAL DEL DOMContentLoaded)
+      // 3. LIGHTBOX
       const lightbox = document.getElementById('lightbox-overlay');
       const lightboxImg = document.getElementById('lightbox-img');
       const closeBtn = document.getElementById('lightbox-close');
@@ -551,32 +552,26 @@
 
       images.forEach(img => {
         img.addEventListener('click', function(e) {
-          e.stopPropagation(); // Evita que el clic en la imagen active el sonido de fondo
+          e.stopPropagation();
           lightboxImg.src = this.src;
           lightbox.classList.add('active');
-          
-          // Al abrir el lightbox, desactivamos el scroll del body
           document.body.style.overflow = 'hidden';
         });
       });
 
       function closeLightbox() {
         lightbox.classList.remove('active');
-        // Reactivamos el scroll del body
         document.body.style.overflow = 'auto';
       }
 
-      // Cerrar con el botón X
       closeBtn.addEventListener('click', closeLightbox);
 
-      // Cerrar haciendo clic fuera de la imagen (en el fondo oscuro)
       lightbox.addEventListener('click', function(e) {
         if (e.target === lightbox) {
           closeLightbox();
         }
       });
 
-      // Cerrar con la tecla ESC
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && lightbox.classList.contains('active')) {
           closeLightbox();
@@ -614,7 +609,6 @@
       if (esBoton) {
         reproducirSonido(sonidoBoton, 150);
       } else {
-        // Si el clic es en el lightbox o en su fondo oscuro, no suena nada
         if (e.target.closest('#lightbox-overlay')) return; 
         reproducirSonido(sonidoClick, 100);
       }

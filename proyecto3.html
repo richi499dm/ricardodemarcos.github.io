@@ -278,7 +278,7 @@
     }
 
 
-    /* RESPONSIVE */
+    /* RESPONSIVE - SOLO CAMBIO EL ASPECT-RATIO */
     @media (max-width: 900px) {
         .single-landing {
             padding: 0;
@@ -318,12 +318,17 @@
             justify-content: center;
         }
 
+        /* ============================================================
+           CAMBIO ÚNICO: Eliminamos cualquier aspect-ratio fijo y 
+           permitimos que la imagen mantenga sus proporciones naturales
+           ============================================================ */
         .project-image {
             width: 100%;
             height: auto;
             max-height: 100%;
             max-width: 100%;
             object-fit: contain;
+            /* SIN aspect-ratio forzado */
         }
 
         .info-footer {

@@ -291,7 +291,7 @@
 
 
 /* ==========================================================================
-   RESPONSIVE (MÓVIL)
+   RESPONSIVE (MÓVIL) - SOLO CAMBIO EL ASPECT-RATIO
    ========================================================================== */
     @media (max-width: 900px) {
         .single-landing { 
@@ -334,11 +334,16 @@
             display: block;
         }
 
+        /* ============================================================
+           CAMBIO ÚNICO: Eliminamos aspect-ratio fijo para que cada
+           imagen mantenga sus proporciones naturales.
+           ============================================================ */
         .project-image-vertical {
             width: 100%;
             height: auto;
             max-width: 100%;
-            aspect-ratio: 2 / 2;
+            object-fit: contain;  /* Para que no se recorte */
+            /* ELIMINADO: aspect-ratio: 2 / 2; */
         }
 
         .info-footer {
