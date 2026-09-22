@@ -3,20 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>I NEED A JEEP</title>
+  <title>TENER UN PEZ VIVO EN LAS MANOS</title>
   <style>
     
     :root {
         --border-color: #e5e5e5;
         --text-color: #000000;
         --text-light: #888;
-        --background-color: #ffffff;
+       --background-color: #ffffff;
         --hover-bg-color: #e9e9e9;
+        /* VARIABLES DEL CURSOR */
         --cursor-size: 4px;
         --cursor-size-hover: 18px;
         --cursor-opacity: 0.8;
         --cursor-color: #000000;
         }
+
 
     :root.modo-oscuro {
         --border-color: #3a3a3a;
@@ -34,6 +36,9 @@
         font-style: normal;
         }
         
+/* ==========================================================================
+   ELIMINACIÓN COMPLETA DEL CURSOR
+   ========================================================================== */
     * {
         cursor: none !important;
         box-sizing: border-box;
@@ -49,6 +54,9 @@
         cursor: none !important;
         }
 
+/* ==========================================================================
+   CURSOR PERSONALIZADO
+   ========================================================================== */
     #custom-cursor {
         position: fixed;
         width: var(--cursor-size);
@@ -68,193 +76,223 @@
         top: -100px;
         }
 
-    body {
-        font-family: 'REX', sans-serif;
-        margin: 0;
-        background-color: var(--background-color);
-        color: var(--text-color);
-        font-size: 0.9em;
-        overflow-y: auto; 
-        height: 100vh;
-        transition: background-color 0.3s ease, color 0.3s ease;
-        }
-    
-    .single-landing {
-        height: 100vh;
-        width: 100vw;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        padding: 0;
-        padding-top: 30px;
-        padding-bottom: 30px;
-        box-sizing: border-box;
-        }
-
-    a { color: var(--text-color); text-decoration: none; }
-    a:hover { color: var(--text-light); }
-
-    .jeep-back {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        color: var(--text-color);
-        text-decoration: none;
-        font-size: 0.8em;
-        z-index: 1000;
-        padding: 0;
-        margin: 0;
-        background: none;
-        border: none;
-        letter-spacing: 0.5px;
-        transition: all 0.3s ease;
-        }
-    .jeep-back:hover { opacity: 0.7; transform: translateX(-2px); }
-
-    #theme-switcher-btn {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1000;
-        background: none;
-        border: none;
-        padding: 0;
-        margin: 0;
-        font: inherit;
-        color: var(--text-color);
-        font-size: 1em;
-        width: 24px;
-        height: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        }
-    #theme-switcher-btn:hover { opacity: 0.7; }
-    #theme-switcher-btn .icon-light, #theme-switcher-btn .icon-dark { display: none; }
-    :root:not(.modo-oscuro) #theme-switcher-btn .icon-light { display: block; }
-    :root.modo-oscuro #theme-switcher-btn .icon-dark { display: block; }
-
-    .horizontal-layout-wrapper {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        overflow: hidden;
+/* ==========================================================================
+   ESTILOS PRINCIPALES
+   ========================================================================== */
+        body {
+            font-family: 'REX', sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-size: 0.9em;
+            overflow-y: auto; 
+            height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            }
+        
+        .single-landing {
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            padding-top: 30px;
+            padding-bottom: 30px;
+            box-sizing: border-box;
         }
 
-    .imagenes-scroll-wrapper {
-        width: 100%;
-        height: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        white-space: nowrap;
-        scroll-behavior: smooth;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        scroll-padding: 0 5vw; 
-        padding-left: 5vw;     
-        padding-right: 5vw;    
-        gap: 40px; 
-        padding-top: 60px;
-        padding-bottom: 80px;
-        }
-    .imagenes-scroll-wrapper::-webkit-scrollbar { display: none; }
+        a { color: var(--text-color); text-decoration: none; }
+        a:hover { color: var(--text-light); }
 
-    .image-container {
-        display: inline-block;
-        flex-shrink: 0;
-        width: auto;
-        height: 85%;
-        }
+/* --- BOTÓN VOLVER --- */
+        .jeep-back {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.8em;
+            z-index: 1000;
+            padding: 0;
+            margin: 0;
+            background: none;
+            border: none;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            }
+        .jeep-back:hover { opacity: 0.7; transform: translateX(-2px); }
 
-    .project-image, .project-image-vertical {
-        height: 100%;
-        width: auto;
-        max-width: 90vw;
-        object-fit: cover;
-        background-color: var(--hover-bg-color);
-        cursor: pointer;
-        }
+/* --- BOTÓN DE CAMBIO DE TEMA --- */
+        #theme-switcher-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            font: inherit;
+            color: var(--text-color);
+            font-size: 1em;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            }
+        #theme-switcher-btn:hover { opacity: 0.7; }
+        #theme-switcher-btn .icon-light, #theme-switcher-btn .icon-dark { display: none; }
+        :root:not(.modo-oscuro) #theme-switcher-btn .icon-light { display: block; }
+        :root.modo-oscuro #theme-switcher-btn .icon-dark { display: block; }
 
-    .image-caption { display: none; }
 
-    .info-footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        z-index: 900;
-        pointer-events: none;
-        padding: 20px 20px 20px 20px;
-        box-sizing: border-box;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        background: linear-gradient(to top, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 100%);
-        }
-
-    .info-footer > div {
-        pointer-events: auto;
-        color: #959595eb;
-        opacity: 0.85;
-        font-size: 0.8em;
-        letter-spacing: 0.3px;
+/* ==========================================================================
+   CARRUSEL HORIZONTAL A SANGRE (CON MARGEN INICIAL)
+   ========================================================================== */
+        .horizontal-layout-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            overflow: hidden;
         }
 
-    .info-footer .left-info {
-        text-align: left;
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
+        /* Contenedor del scroll horizontal de imágenes */
+        .imagenes-scroll-wrapper {
+            width: 100%;
+            height: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            
+            /* MARGEN QUE DESAPARECE AL SCROLLEAR (IGUAL QUE PROYECTO 01) */
+            scroll-padding: 0 5vw; 
+            padding-left: 5vw;     
+            padding-right: 5vw;    
+            
+            gap: 40px; 
+            padding-top: 60px;
+            padding-bottom: 60px;
+        }
+        .imagenes-scroll-wrapper::-webkit-scrollbar { display: none; }
+
+        /* Las imágenes dentro del scroll */
+        .image-container {
+            display: inline-block;
+            flex-shrink: 0;
+            width: auto;
+            height: 85%;
         }
 
-    .info-footer .right-info {
-        text-align: right;
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
+        .project-image, .project-image-vertical {
+            height: 100%;
+            width: auto;
+            max-width: 90vw;
+            object-fit: cover;
+            background-color: var(--hover-bg-color);
+            cursor: pointer;
         }
 
-    #lightbox-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(255, 255, 255, 0.90);
-        z-index: 999998;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        transition: opacity 0.7s ease;
-        pointer-events: none;
-        }
-    #lightbox-overlay.active {
-        display: flex;
-        opacity: 1;
-        pointer-events: auto;
+        .image-caption { display: none; }
+
+
+/* ==========================================================================
+   NUEVO PIE DE PÁGINA
+   ========================================================================== */
+        .info-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 900;
+            pointer-events: none;
+            
+            padding: 20px 20px 20px 20px;
+            box-sizing: border-box;
+            
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            
+            background: linear-gradient(to top, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 100%);
         }
 
-    #lightbox-overlay img {
-        max-width: 85vw;
-        max-height: 85vh;
-        object-fit: contain;
-        border-radius: 0px;
-        transform: scale(0.95);
-        transition: transform 0.3s ease;
-        }
-    #lightbox-overlay.active img {
-        transform: scale(1);
+        .info-footer > div {
+            pointer-events: auto; /* El texto en sí no es cliqueable, pero si quisieras poner un link, esto lo permite */
+            color: #959595eb;
+            opacity: 0.85;
+            font-size: 0.8em;
+            letter-spacing: 0.3px;
         }
 
+        .info-footer .left-info {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .info-footer .right-info {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+
+/* ==========================================================================
+   LIGHTBOX (TAMAÑO 85%) - CORREGIDO
+   ========================================================================== */
+      #lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* ✅ CORRECCIÓN: fondo blanco al 90% de opacidad */
+            background-color: rgba(255, 255, 255, 0.90);
+            z-index: 999998;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.7s ease;
+            pointer-events: none;
+        }
+        #lightbox-overlay.active {
+            display: flex;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #lightbox-overlay img {
+            max-width: 85vw;    
+            max-height: 85vh;   
+            object-fit: contain;
+            border-radius: 0px;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        #lightbox-overlay.active img {
+            transform: scale(1);
+        }
+
+
+/* ==========================================================================
+   RESPONSIVE (MÓVIL)
+   ========================================================================== */
     @media (max-width: 900px) {
         .single-landing { 
             padding: 0;
@@ -262,7 +300,7 @@
             padding-bottom: 30px;
             height: auto; 
             overflow-y: auto; 
-            }
+        }
         .jeep-back { top: 15px; left: 15px; }
         #theme-switcher-btn { top: 15px; right: 15px; }
 
@@ -270,7 +308,7 @@
             flex-direction: column;
             height: auto;
             align-items: stretch;
-            }
+        }
 
         .imagenes-scroll-wrapper {
             width: 100%;
@@ -284,29 +322,27 @@
             align-items: stretch;
             padding-top: 20px;
             padding-bottom: 100px;
+            
+            /* ELIMINAMOS MÁRGENES EN MÓVIL */
             padding-left: 0;
             padding-right: 0;
             scroll-padding: 0;
-            }
+        }
 
         .image-container {
             width: 100%;
             height: auto;
             display: block;
-            }
+        }
 
-        /* ============================================================
-           CAMBIO CLAVE: Eliminamos aspect-ratio fijo para que cada
-           imagen mantenga sus proporciones naturales.
-           ============================================================ */
         .project-image, .project-image-vertical {
             width: 100%;
             height: auto;
             max-width: 100%;
-            object-fit: contain;  /* Para que no se recorte */
-            /* ELIMINADO: aspect-ratio: 3 / 2; */
-            /* ELIMINADO: aspect-ratio: 3 / 3; */
-            }
+            aspect-ratio: 3 / 2;
+        }
+        
+        .project-image-vertical { aspect-ratio: 3 / 3; }
 
         .info-footer {
             padding: 15px 20px 20px 20px;
@@ -314,10 +350,10 @@
             align-items: flex-start;
             gap: 5px;
             background: linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
-            }
+        }
         .info-footer .right-info {
             text-align: left;
-            }
+        }
 
         #lightbox-close {
             top: 20px;
@@ -326,84 +362,81 @@
             width: 35px;
             height: 35px;
             color: #555;
-            }
         }
+    }
 
-  </style>
+    </style>
 </head>
 <body>
 
+  <!-- CURSOR PERSONALIZADO -->
   <div id="custom-cursor"></div>
 
+  <!-- BOTÓN VOLVER -->
   <a href="index.html" class="jeep-back">RICARDO DE MARCOS</a>
 
+  <!-- BOTÓN DE TEMA -->
   <button id="theme-switcher-btn">
     <span class="icon-light">/B</span>
     <span class="icon-dark">/W</span>
   </button>
 
+  <!-- CONTENEDOR PRINCIPAL -->
   <div class="single-landing">
       
+      <!-- CARRUSEL FULL-WIDTH -->
       <div class="horizontal-layout-wrapper">
 
+          <!-- SCROLL HORIZONTAL DE IMÁGENES -->
           <div class="imagenes-scroll-wrapper" id="horizontalScroll">
             
             <div class="image-container">
-              <img src="IMAGES/01/img11.webp" alt="I NEED A JEEP - 01" class="project-image">
+              <img src="IMAGES/02/img01.webp" alt="Proyecto 1 - Imagen 1" class="project-image">
             </div>
+            
             <div class="image-container">
-              <img src="IMAGES/01/img14.webp" alt="I NEED A JEEP - 02" class="project-image">
+              <img src="IMAGES/02/img02.webp" alt="Proyecto 1 - Imagen 2" class="project-image">
             </div>
+            
             <div class="image-container">
-              <img src="IMAGES/01/img10.webp" alt="I NEED A JEEP - 03" class="project-image">
+              <img src="IMAGES/02/img03.webp" alt="Proyecto 1 - Imagen 3" class="project-image">
             </div>
-            <div class="image-container">
-              <img src="IMAGES/01/img09.webp" alt="I NEED A JEEP - 04" class="project-image">
+
+             <div class="image-container">
+              <img src="IMAGES/02/img10.webp" alt="Proyecto 1 - Imagen 3" class="project-image">
             </div>
+
             <div class="image-container">
-              <img src="IMAGES/01/img01.webp" alt="I NEED A JEEP - 05" class="project-image">
+              <img src="IMAGES/02/img09.webp" alt="Proyecto 1 - Imagen 7" class="project-image-vertical">
             </div>
+
             <div class="image-container">
-              <img src="IMAGES/01/img08.webp" alt="I NEED A JEEP - 06" class="project-image-vertical">
+              <img src="IMAGES/02/img08.webp" alt="Proyecto 1 - Imagen 7" class="project-image-vertical">
             </div>
+
+            
             <div class="image-container">
-              <img src="IMAGES/01/img15.webp" alt="I NEED A JEEP - 07" class="project-image">
+              <img src="IMAGES/02/img04.webp" alt="Proyecto 1 - Imagen 4" class="project-image">
             </div>
+            
             <div class="image-container">
-              <img src="IMAGES/01/img04.webp" alt="I NEED A JEEP - 08" class="project-image">
+              <img src="IMAGES/02/img05.webp" alt="Proyecto 1 - Imagen 5" class="project-image">
             </div>
-            <div class="image-container">
-              <img src="IMAGES/01/img16.webp" alt="I NEED A JEEP - 09" class="project-image">
+            
+             <div class="image-container">
+              <img src="IMAGES/02/img06.webp" alt="Proyecto 1" class="project-image">
             </div>
+            
             <div class="image-container">
-              <img src="IMAGES/01/img22.webp" alt="I NEED A JEEP - 10" class="project-image">
+              <img src="IMAGES/02/img11.webp" alt="Proyecto 1 - Imagen 10" class="project-image">
             </div>
+
             <div class="image-container">
-              <img src="IMAGES/01/img23.webp" alt="I NEED A JEEP - 11" class="project-image-vertical">
+              <img src="IMAGES/02/img07.webp" alt="Proyecto 1 - Imagen 10" class="project-image">
             </div>
+
             <div class="image-container">
-              <img src="IMAGES/01/img02.webp" alt="I NEED A JEEP - 12" class="project-image">
-            </div>
-            <div class="image-container">
-              <img src="IMAGES/01/img18.webp" alt="I NEED A JEEP - 13" class="project-image">
-            </div>
-            <div class="image-container">
-              <img src="IMAGES/01/img03.webp" alt="I NEED A JEEP - 14" class="project-image">
-            </div>
-            <div class="image-container">
-              <img src="IMAGES/01/img13.webp" alt="I NEED A JEEP - 15" class="project-image">
-            </div>
-            <div class="image-container">
-              <img src="IMAGES/01/img20.webp" alt="I NEED A JEEP - 16" class="project-image">
-            </div>
-            <div class="image-container">
-              <img src="IMAGES/01/img06.webp" alt="I NEED A JEEP - 17" class="project-image">
-            </div>
-            <div class="image-container">
-              <img src="IMAGES/01/img12.webp" alt="I NEED A JEEP - 18" class="project-image">
-            </div>
-            <div class="image-container">
-              <img src="IMAGES/01/texto.png" alt="I NEED A JEEP - 19" class="project-image">
+              <img src="IMAGES/02/texto.png" alt="Proyecto 1 - Imagen 10" class="project-image">
             </div>
 
           </div>
@@ -412,27 +445,30 @@
 
   </div> 
 
+  <!-- LIGHTBOX OVERLAY -->
   <div id="lightbox-overlay">
       <span id="lightbox-close">&times;</span>
       <img id="lightbox-img" src="" alt="Imagen ampliada">
   </div>
 
+  <!-- INFO FOOTER -->
   <div class="info-footer">
       <div class="left-info">
-          <span>I NEED A JEEP</span>
-          <span>Chaiz Estudio, Madrid 2026</span>
+          <span>TENER UN PEZ VIVO EN LAS MANOS</span>
+          <span>GE53 Galería, Valencia 2025</span>
       </div>
       <div class="right-info">
           <span>Texto por María Pagola</span>
-          <span>Fotografía por Diego P. de la Cruz</span>
-          <span>Comisariado por Arturo Fernández</span>
+          <span>Comisariado por Pablo Quesada</span>
       </div>
   </div>
 
+  <!-- JAVASCRIPT -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('📄 Proyecto 1 (I NEED A JEEP) cargado');
+      console.log('📄 Proyecto 2 (Pez Vivo) cargado');
       
+      // 1. CURSOR
       const cursor = document.getElementById('custom-cursor');
       
       if (cursor) {
@@ -462,6 +498,7 @@
         document.addEventListener('mouseenter', function() { cursor.style.opacity = 'var(--cursor-opacity)'; });
       }
       
+      // 2. TEMA CLARO/OSCURO
       const themeBtn = document.getElementById('theme-switcher-btn');
       if (themeBtn) {
         const savedTheme = localStorage.getItem('theme');
@@ -474,6 +511,7 @@
         });
       }
 
+      // 3. LIGHTBOX
       const lightbox = document.getElementById('lightbox-overlay');
       const lightboxImg = document.getElementById('lightbox-img');
       const closeBtn = document.getElementById('lightbox-close');
@@ -509,6 +547,7 @@
       
     });
 
+    // SONIDOS (SOLO EN CLIC)
     let sonidosActivados = true;
     let ultimoSonido = 0;
     
